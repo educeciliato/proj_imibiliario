@@ -1,0 +1,85 @@
+id_anuncio,data_coleta,fonte,bairro,endereco_generico,aluguel_mensal,area_m2,quartos,banheiros,vagas_garagem,suites,cozinha,piscina,churrasqueira,area_externa,condicao_imovel,mobiliado,latitude,longitude,url_anuncio,observacoes
+mgf_umuarama_001,2026-09-15,MGF IMÓVEIS,Jardim São Cristóvão,,2800.0,,4,1,2,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua São José; sala ampla, cozinha"
+mgf_umuarama_002,2026-09-15,MGF IMÓVEIS,Jardim São Cristóvão,,1500.0,,3,1,2,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"3 quartos, sala, cozinha"
+mgf_umuarama_003,2026-09-15,MGF IMÓVEIS,Jardim São Cristóvão,,1900.0,,3,1,2,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_004,2026-09-15,MGF IMÓVEIS,Jardim Aratimbó,,900.0,,3,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,próxima ao Lago Aratimbó
+mgf_umuarama_005,2026-09-15,MGF IMÓVEIS,Jardim Aeroporto,,6600.0,60.0,2,1,1,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua Ebílio Uliana 1501
+mgf_umuarama_006,2026-09-15,MGF IMÓVEIS,Jardim Aeroporto,,1200.0,,2,1,1,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_007,2026-09-15,MGF IMÓVEIS,Linha Bonita,,2500.0,,3,2,2,1,,,,,,Sim,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"cozinha mobiliada, garagem 2 carros"
+mgf_umuarama_008,2026-09-15,MGF IMÓVEIS,Zona Ii,,5000.0,,3,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua Maranhão 3630; região central
+mgf_umuarama_009,2026-09-15,MGF IMÓVEIS,Zona Ii,,2500.0,,4,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua Goiás 3848 / Jd dos Príncipes (sobrado)
+mgf_umuarama_010,2026-09-15,MGF IMÓVEIS,Zona Ii,,2400.0,,4,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua Célia Maria Olmedo
+mgf_umuarama_011,2026-09-15,MGF IMÓVEIS,Zona Ii,,4690.0,260.0,4,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,locação comercial ou residencial
+mgf_umuarama_012,2026-09-15,MGF IMÓVEIS,Zona Ii,,7900.0,,4,2,2,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_013,2026-09-15,MGF IMÓVEIS,Zona Ii,,2300.0,,1,1,1,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_014,2026-09-15,MGF IMÓVEIS,Zona Ii,,750.0,,1,1,1,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"sala, cozinha, banheiro, área serviço"
+mgf_umuarama_015,2026-09-15,MGF IMÓVEIS,Zona Ii,,750.0,,3,,,2,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua Piauí; 2 suítes, 1 escritório"
+mgf_umuarama_016,2026-09-15,MGF IMÓVEIS,Parque Dom Bosco,,2000.0,286.0,3,5,,3,,,,,,Sim,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Jd América; 540m² terreno, 286m² constr., mobiliada"
+mgf_umuarama_017,2026-09-15,MGF IMÓVEIS,Jardim Belvedere,,,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"sala, cozinha planejada"
+mgf_umuarama_018,2026-09-15,MGF IMÓVEIS,Paysage Essenza Condomínio,,4900.0,240.0,3,,2,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"casa nova alto padrão (Neto Romagna), 152m² privativa"
+mgf_umuarama_019,2026-09-15,MGF IMÓVEIS,Paysage Unique Condomínio,,5500.0,,3,,2,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,condomínio residencial
+mgf_umuarama_020,2026-09-15,MGF IMÓVEIS,Parque Residencial Interlagos Ii,,4900.0,,3,2,2,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,alto padrão
+mgf_umuarama_021,2026-09-15,MGF IMÓVEIS,Parque Residencial Interlagos Ii,,5500.0,,4,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,alto padrão
+mgf_umuarama_022,2026-09-15,MGF IMÓVEIS,Parque Residencial Interlagos Ii,,3000.0,,3,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_023,2026-09-15,MGF IMÓVEIS,Paysage Essenza Condomínio,,3800.0,,4,,2,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,casa nova
+mgf_umuarama_024,2026-09-15,MGF IMÓVEIS,Zona I,,7900.0,,4,,2,4,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,comercial ou residencial premium
+mgf_umuarama_025,2026-09-15,MGF IMÓVEIS,Zona I,,1500.0,,3,1,2,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_026,2026-09-15,MGF IMÓVEIS,Zona I,,3000.0,,3,1,,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Av. Brasil 3728, Centro-A, próx. Santos Dumont"
+mgf_umuarama_027,2026-09-15,MGF IMÓVEIS,Jardim Yoshi,,3800.0,,3,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,residência sofisticada
+mgf_umuarama_028,2026-09-15,MGF IMÓVEIS,Jardim Yoshi,,3800.0,,4,1,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_029,2026-09-15,MGF IMÓVEIS,Jardim Yoshi,,4950.0,,3,1,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_030,2026-09-15,MGF IMÓVEIS,Zona I-A,,4500.0,,4,2,,1,,,Sim,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,sobrado residencial/comercial; 4 vagas; churrasqueira
+mgf_umuarama_031,2026-09-15,MGF IMÓVEIS,Zona I-A,,4500.0,,7,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,locação comercial ou residencial; 4 vagas
+mgf_umuarama_032,2026-09-15,MGF IMÓVEIS,Jardim Dos Príncipes,,3900.0,,4,,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua Goiás 3848, Zona III (sobrado)"
+mgf_umuarama_033,2026-09-15,MGF IMÓVEIS,Jardim Alphaville,,2500.0,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"suíte, 2 quartos"
+mgf_umuarama_034,2026-09-15,MGF IMÓVEIS,Jardim Tamoio,,4000.0,,2,,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_035,2026-09-15,MGF IMÓVEIS,Parque Cidade Jardim,,5900.0,,3,,3,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"1 suíte, 2 quartos, copa cozinha"
+mgf_umuarama_036,2026-09-15,MGF IMÓVEIS,Parque Cidade Jardim,,1600.0,,2,,3,2,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"sobrado, 2 suítes, quintal"
+mgf_umuarama_037,2026-09-15,MGF IMÓVEIS,Parque Cidade Jardim,,990.0,,3,1,1,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_038,2026-09-15,MGF IMÓVEIS,Zona Iii,,2800.0,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua José Honório Ramos; 1 suíte, 2 quartos"
+mgf_umuarama_039,2026-09-15,MGF IMÓVEIS,Zona Iii,,1700.0,,3,2,2,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,alvenaria; suíte + 2 quartos
+mgf_umuarama_040,2026-09-15,MGF IMÓVEIS,Zona Iii,,4950.0,,3,,2,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Condomínio Paysage Unique
+mgf_umuarama_041,2026-09-15,MGF IMÓVEIS,Jardim Azaléia,,2500.0,,2,1,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,residência com sala comercial
+mgf_umuarama_042,2026-09-15,MGF IMÓVEIS,Jardim Azaléia,,5500.0,,4,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_043,2026-09-15,MGF IMÓVEIS,Jardim Azaléia,,1450.0,,4,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"1 suíte, 1 quarto, banheiro social"
+mgf_umuarama_044,2026-09-15,MGF IMÓVEIS,Jardim Azaléia,,1450.0,,2,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_045,2026-09-15,MGF IMÓVEIS,Parque Estância Ii,,1900.0,,3,2,2,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua Hélio Birello 2741; suíte c/ roupeiro
+mgf_umuarama_046,2026-09-15,MGF IMÓVEIS,Parque Estância Ii,,2000.0,,3,2,2,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_047,2026-09-15,MGF IMÓVEIS,Parque Alto Da Paraná,,900.0,,2,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"1 suíte, 1 quarto, cozinha planejada"
+mgf_umuarama_048,2026-09-15,MGF IMÓVEIS,Parque Danielle,,1100.0,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua Ibiaí; suíte, 2 quartos"
+mgf_umuarama_049,2026-09-15,MGF IMÓVEIS,Zona Vii,,900.0,,2,,1,,,,Sim,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Av. Aracajú; 2 quartos, churrasqueira"
+mgf_umuarama_050,2026-09-15,MGF IMÓVEIS,Zona I,,3750.0,,3,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua Aquidaban 4361, residencial/comercial"
+mgf_umuarama_051,2026-09-15,MGF IMÓVEIS,Parque Interlagos,,1500.0,,3,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua João Meretka Neto; 3 quartos
+mgf_umuarama_052,2026-09-15,MGF IMÓVEIS,Parque Residencial Interlagos,,900.0,,3,1,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua João Meretka Neto
+mgf_umuarama_053,2026-09-15,MGF IMÓVEIS,Jardim Paineiras,,4900.0,,3,,2,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,condomínio (Neto Romagna)
+mgf_umuarama_054,2026-09-15,MGF IMÓVEIS,Jardim Panorama,,7900.0,501.0,4,,2,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,501m² área total
+mgf_umuarama_055,2026-09-15,MGF IMÓVEIS,Jardim Garças,,1300.0,80.0,3,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,80m² área; área de serviço
+mgf_umuarama_056,2026-09-15,MGF IMÓVEIS,Alto São Francisco,,2000.0,332.0,7,,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"4 suítes, área gourmet integrada"
+mgf_umuarama_057,2026-09-15,MGF IMÓVEIS,Gleba Figueira,,4900.0,260.0,4,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,260m² área privada
+mgf_umuarama_058,2026-09-15,MGF IMÓVEIS,Parque Residencial Tokio,,1200.0,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"1 suíte, 2 quartos"
+mgf_umuarama_059,2026-09-15,MGF IMÓVEIS,Parque San Caetano,,800.0,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"3 quartos, sala, cozinha"
+mgf_umuarama_060,2026-09-15,MGF IMÓVEIS,Parque San Caetano,,1400.0,,3,,1,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_061,2026-09-15,MGF IMÓVEIS,Jd. Colibri,,1300.0,,3,,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,edícula com área de serviços
+mgf_umuarama_062,2026-09-15,MGF IMÓVEIS,Jardim Cruzeiro,,700.0,,3,,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"2 quartos, sala, cozinha"
+mgf_umuarama_063,2026-09-15,MGF IMÓVEIS,Jardim Cruzeiro,,3800.0,,3,,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_064,2026-09-15,MGF IMÓVEIS,Jardim Araxá,,1850.0,,4,2,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Travessa Ijuí; 1 suíte, 2 quartos"
+mgf_umuarama_065,2026-09-15,MGF IMÓVEIS,Zona Vi,,1450.0,,2,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_066,2026-09-15,MGF IMÓVEIS,Jardim Birigui,,3000.0,,3,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Santorini Residence, Av. Rio Grande do Sul"
+mgf_umuarama_067,2026-09-15,MGF IMÓVEIS,Zona V,,12000.0,,3,4,,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,alto padrão
+mgf_umuarama_068,2026-09-15,MGF IMÓVEIS,Munguba,,6250.0,,3,1,,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Condomínio Central Park
+mgf_umuarama_069,2026-09-15,MGF IMÓVEIS,Parque Residencial Monte Líbano,,4200.0,,3,1,,2,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Av. Valdomiro Frederico / Pq da Gávea; próx. Unialfa/Uopeccan
+mgf_umuarama_070,2026-09-15,MGF IMÓVEIS,Parque Interlagos Ii,,1350.0,154.25,2,1,,1,,,Sim,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Rua Demerval Rocha Murça 3834; 92m² constr.; suíte c/ closet, churrasqueira (Canguru)"
+mgf_umuarama_071,2026-09-15,MGF IMÓVEIS,Jardim Pacífico,,1400.0,,4,1,,2,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Av. Celeste Maria Rosalina Janeiro
+mgf_umuarama_072,2026-09-15,MGF IMÓVEIS,Jardim Pacífico,,2500.0,,4,1,,2,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,
+mgf_umuarama_073,2026-09-15,MGF IMÓVEIS,Jardim São Cristóvão,,6250.0,,3,1,,3,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Condomínio Central Park
+mgf_umuarama_074,2026-09-15,MGF IMÓVEIS,Gleba Figueira,,7000.0,278.0,6,1,,,,Sim,,,,Sim,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"Condomínio EcoVille; mobiliada, piscina"
+seed_umuarama_075,2026-09-15,WIMOVEIS,Zona 07,,980.0,,3,1,,,,,,,,,,,https://www.wimoveis.com.br/aluguel/casas/padrao/pr/umuarama,"Av. Rondônia 3930; alvenaria, garagem coberta p/ moto, quintal calçado"
+seed_umuarama_076,2026-09-15,WIMOVEIS,Próximo Ao Cemil,,,,3,1,,1,,,,,,,,,https://www.wimoveis.com.br/aluguel/casas/padrao/pr/umuarama,"1 suíte, 2 quartos, sala, cozinha, vaga garagem"
+seed_umuarama_077,2026-09-15,CASAMINEIRA,Umuarama (Não Especificado),,3900.0,150.0,3,2,4,1,,,,,,,,,https://www.casamineira.com.br/aluguel/casa/umuarama_pr,"cozinha planejada, garagem ampla p/ 4 carros"
+seed_umuarama_078,2026-09-15,MGF IMÓVEIS,Jardim Ibis,,,125.0,3,1,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"casa nova, projeto moderno"
+seed_umuarama_079,2026-09-15,MGF IMÓVEIS,Jardim Estância Ii,,,137.0,3,1,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"casa nova, pronta para morar"
+seed_umuarama_080,2026-09-15,MGF IMÓVEIS,Parque Irani,,,,2,1,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,Rua Antonio Zanolo Fernandes 1175; próx. Fábrica da Guri
+seed_umuarama_081,2026-09-15,MGF IMÓVEIS,Jardim Garças Ii,,,,3,1,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"1 suíte, cozinha planejada"
+seed_umuarama_082,2026-09-15,MGF IMÓVEIS,Parque Metropolitano I,,,,3,,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,casa para locação
+seed_umuarama_083,2026-09-15,MGF IMÓVEIS,Tocantins,,,90.27,3,,,1,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"180m² terreno; 1 suíte, 2 quartos"
+seed_umuarama_084,2026-09-15,MGF IMÓVEIS,Jardim Pancera,,,,3,,,,,,,,,,,,https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama,"sobrado alto padrão, fino acabamento"

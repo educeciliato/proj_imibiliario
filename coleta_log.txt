@@ -1,0 +1,23 @@
+2026-09-21 20:30:43,424 | INFO | Início da coleta | início=2026-09-21T20:30:43.423629-03:00 | cidade=umuarama | fontes=aldemir,garcia,babolin,mgf
+2026-09-21 20:30:43,424 | INFO | Início da fonte: aldemir
+2026-09-21 20:30:44,485 | INFO | robots.txt consultado com sucesso | fonte=aldemir | url=https://www.aldemirimoveis.com.br/robots.txt
+2026-09-21 20:30:44,485 | INFO | GET https://www.aldemirimoveis.com.br/imoveis-para-alugar (tentativa 1/3)
+2026-09-21 20:30:46,966 | INFO | Página 1: 0 links novos
+2026-09-21 20:30:46,966 | INFO | Total de anúncios candidatos: 0
+2026-09-21 20:30:46,966 | INFO | Início da fonte: garcia
+2026-09-21 20:30:48,507 | INFO | robots.txt consultado com sucesso | fonte=garcia | url=https://garciaimoveis.com/robots.txt
+2026-09-21 20:30:48,509 | INFO | GET https://garciaimoveis.com/imoveis-para-alugar (tentativa 1/3)
+2026-09-21 20:30:53,669 | INFO | Página 1: 0 links novos
+2026-09-21 20:30:53,669 | INFO | Total de anúncios candidatos: 0
+2026-09-21 20:30:53,670 | INFO | Início da fonte: babolin
+2026-09-21 20:30:54,237 | INFO | robots.txt consultado com sucesso | fonte=babolin | url=https://imobiliariababolim.com.br/robots.txt
+2026-09-21 20:30:54,238 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama (tentativa 1/3)
+2026-09-21 20:30:55,342 | INFO | Página 1: 0 links novos
+2026-09-21 20:30:55,342 | INFO | Total de anúncios candidatos: 0
+2026-09-21 20:30:55,343 | INFO | Início da fonte: mgf
+2026-09-21 20:30:56,641 | INFO | robots.txt consultado com sucesso | fonte=mgf | url=https://www.mgfimoveis.com.br/robots.txt
+2026-09-21 20:30:56,642 | WARNING | URL bloqueada por robots.txt: https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama
+2026-09-21 20:30:56,642 | ERROR | Paginação interrompida: robots.txt não autoriza https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama
+2026-09-21 20:30:56,643 | INFO | Total de anúncios candidatos: 0
+2026-09-21 20:30:56,643 | INFO | Fim da coleta | fim=2026-09-21T20:30:56.643998-03:00 | visitados=3 | válidos=0 | rejeitados=0 | duplicatas=0 | erros=0 | duração=13.22s
+2026-09-21 20:30:56,643 | ERROR | Meta não atingida: 0 válidos; mínimo solicitado=120
