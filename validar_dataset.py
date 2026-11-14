@@ -1,226 +1,163 @@
 #!/usr/bin/env python3
 """
-Validador de Dataset — Aluguel de Casas em Umuarama
-Verifica qualidade, ausentes, outliers e gera relatório
+Validador de Dataset — Aluguel de Casas em Umuarama.
+
+Relatório de qualidade (não altera os dados). Funciona com o CSV bruto ou
+com o processado; quando há colunas de região, avalia a cobertura por região.
+
+Uso:
+    python validar_dataset.py [arquivo.csv] [--saida reports/validacao.txt]
 """
+from __future__ import annotations
+
+import argparse
+import io
+import sys
+from contextlib import redirect_stdout
+from datetime import datetime
+from pathlib import Path
 
 import pandas as pd
-import numpy as np
-from datetime import datetime
-import sys
+
+import config
+
+OBRIGATORIOS = ["id_anuncio", "data_coleta", "fonte", "bairro", "aluguel_mensal", "url_anuncio"]
+SECUNDARIOS = ["area_m2", "quartos", "banheiros", "vagas_garagem", "suites", "latitude"]
+
 
 class ValidadorDataset:
-    def __init__(self, caminho_csv):
-        """Carrega e valida o dataset"""
+    def __init__(self, caminho_csv: str | Path):
         try:
             self.df = pd.read_csv(caminho_csv)
-            self.caminho = caminho_csv
-            self.relatorio = []
         except FileNotFoundError:
             print(f"❌ Erro: Arquivo '{caminho_csv}' não encontrado")
             sys.exit(1)
-    
-    def validar(self):
-        """Executa todas as validações"""
-        print("\n" + "="*70)
-        print("VALIDAÇÃO DE DATASET — Aluguel de Casas em Umuarama")
-        print("="*70)
-        
+        self.caminho = Path(caminho_csv)
+        self.problemas: list[str] = []
+
+    def validar(self) -> list[str]:
+        print("\n" + "=" * 70)
+        print(f"VALIDAÇÃO DE DATASET — {self.caminho.name}")
+        print("=" * 70)
         self._resumo_basico()
-        self._campos_obrigatorios()
-        self._tipos_dados()
+        self._campos()
+        self._tipos()
         self._outliers()
         self._duplicatas()
-        self._valores_padrao()
-        self._bairros()
-        
-        self._gerar_relatorio()
-    
+        self._datas()
+        self._cobertura_regional()
+        self._conclusao()
+        return self.problemas
+
     def _resumo_basico(self):
-        """Dimensões e visão geral"""
-        print(f"\n📊 RESUMO BÁSICO")
-        print(f"   Linhas: {len(self.df)}")
-        print(f"   Colunas: {len(self.df.columns)}")
-        print(f"   Tamanho: {self.df.memory_usage(deep=True).sum() / 1024:.2f} KB")
-        
-        if len(self.df) < 80:
-            print(f"   ⚠️  AVISO: Dataset tem apenas {len(self.df)} registros (meta: 120+)")
-    
-    def _campos_obrigatorios(self):
-        """Verifica ausência em campos críticos"""
-        print(f"\n✓ CAMPOS OBRIGATÓRIOS")
-        
-        # Críticos: sem eles a linha não serve. Só estes podem reprovar.
-        obrigatorios = ["id_anuncio", "data_coleta", "fonte", "bairro",
-                        "aluguel_mensal", "url_anuncio"]
-        # Secundários: bom ter, mas ausência é ESPERADA (fica em branco).
-        secundarios = ["area_m2", "quartos", "banheiros", "vagas_garagem", "suites"]
+        print(f"\n📊 RESUMO BÁSICO\n   Linhas: {len(self.df)} | Colunas: {len(self.df.columns)}")
+        n_alvo = self.df["aluguel_mensal"].notna().sum()
+        print(f"   Casas com aluguel (utilizáveis como alvo): {n_alvo}")
+        if n_alvo < 100:
+            self.problemas.append(f"apenas {n_alvo} casas com aluguel — amostra pequena para treino/teste")
+        if "fonte" in self.df:
+            print("   Por fonte: " + ", ".join(f"{k}={v}" for k, v in self.df["fonte"].value_counts().items()))
+            # MGF Imóveis migrou para Deztop: para concentração, são o mesmo portal
+            portal = self.df["fonte"].astype(str).str.upper().str.replace(r".*(MGF|DEZTOP).*", "MGF/DEZTOP", regex=True)
+            cont = portal.value_counts(normalize=True)
+            if cont.iloc[0] > 0.6:
+                self.problemas.append(f"fonte concentrada: {cont.iloc[0]:.0%} dos registros vêm de {cont.index[0]}")
 
-        for campo in obrigatorios:
-            if campo not in self.df.columns:
-                print(f"   ❌ {campo}: FALTA COLUNA")
+    def _campos(self):
+        print("\n✓ CAMPOS OBRIGATÓRIOS")
+        for c in OBRIGATORIOS:
+            if c not in self.df:
+                print(f"   ❌ {c}: coluna ausente")
+                self.problemas.append(f"coluna obrigatória ausente: {c}")
                 continue
-            
-            ausentes = self.df[campo].isna().sum()
-            pct = (ausentes / len(self.df)) * 100
-            
-            if ausentes == 0:
-                print(f"   ✓ {campo}: OK (0 ausentes)")
-            elif pct < 5:
-                print(f"   ⚠️  {campo}: {ausentes} ausentes ({pct:.1f}%)")
-            else:
-                print(f"   ❌ {campo}: {ausentes} ausentes ({pct:.1f}%) — campo crítico!")
+            aus = self.df[c].isna().sum()
+            pct = aus / len(self.df) * 100
+            marca = "✓" if aus == 0 else ("⚠️ " if pct < 5 else "❌")
+            print(f"   {marca} {c}: {aus} ausentes ({pct:.1f}%)")
+            if pct >= 5:
+                self.problemas.append(f"{c}: {pct:.0f}% ausente")
+        print("\n📊 PREENCHIMENTO DOS CAMPOS SECUNDÁRIOS (ausência é esperada; imputada no modelo)")
+        for c in SECUNDARIOS:
+            if c in self.df:
+                pct = self.df[c].notna().mean() * 100
+                marca = "✓" if pct >= 60 else ("⚠️ " if pct >= 25 else "🔴")
+                print(f"   {marca} {c}: {pct:.0f}% preenchido")
 
-        print(f"\n📊 PREENCHIMENTO DOS CAMPOS SECUNDÁRIOS (ausência é normal)")
-        for campo in secundarios:
-            if campo not in self.df.columns:
-                continue
-            preenchidos = self.df[campo].notna().sum()
-            pct = (preenchidos / len(self.df)) * 100
-            marca = "✓" if pct >= 60 else ("⚠️ " if pct >= 25 else "🔴")
-            print(f"   {marca} {campo}: {preenchidos}/{len(self.df)} preenchidos ({pct:.0f}%)")
-        print("   (área costuma faltar em dados de busca; o scraper na sua"
-              " máquina resolve isso lendo a página de cada anúncio)")
-    
-    def _tipos_dados(self):
-        """Valida tipos esperados"""
-        print(f"\n🔧 TIPOS DE DADOS")
-        
-        validacoes = {
-            "aluguel_mensal": ("numérico", float),
-            "area_m2": ("numérico", float),
-            "quartos": ("inteiro", int),
-            "banheiros": ("inteiro", int),
-            "vagas_garagem": ("inteiro", int),
-            "suites": ("inteiro", int),
-            "latitude": ("numérico", float),
-            "longitude": ("numérico", float),
-        }
-        
-        for campo, (tipo_esperado, tipo_python) in validacoes.items():
-            if campo not in self.df.columns:
-                continue
-            
-            # Tentar converter
-            valores_validos = pd.to_numeric(self.df[campo], errors='coerce')
-            invalidos = valores_validos.isna().sum()
-            
-            if invalidos == 0:
-                print(f"   ✓ {campo}: {tipo_esperado} OK")
-            else:
-                print(f"   ⚠️  {campo}: {invalidos} valores não-numéricos")
-    
+    def _tipos(self):
+        print("\n🔧 TIPOS")
+        for c in ["aluguel_mensal", "area_m2", "quartos", "banheiros", "vagas_garagem", "suites", "latitude", "longitude"]:
+            if c in self.df:
+                bruto = self.df[c].dropna()
+                inval = pd.to_numeric(bruto, errors="coerce").isna().sum()
+                print(f"   {'✓' if inval == 0 else '⚠️ '} {c}: {inval} valores não numéricos")
+
     def _outliers(self):
-        """Detecta valores extremos"""
-        print(f"\n⚠️  OUTLIERS E VALORES EXTREMOS")
-        
-        # Aluguel
-        if "aluguel_mensal" in self.df.columns:
-            aluguel = pd.to_numeric(self.df["aluguel_mensal"], errors='coerce')
-            suspeitos = aluguel[(aluguel < 300) | (aluguel > 25000)]
-            if len(suspeitos) > 0:
-                print(f"   ⚠️  Aluguel fora do intervalo [300, 25000]: {len(suspeitos)} registros")
-                print(f"       Min: R$ {aluguel.min():.2f} | Max: R$ {aluguel.max():.2f}")
-        
-        # Área
-        if "area_m2" in self.df.columns:
-            area = pd.to_numeric(self.df["area_m2"], errors='coerce')
-            suspeitos = area[(area < 20) | (area > 1000)]
-            if len(suspeitos) > 0:
-                print(f"   ⚠️  Área fora do intervalo [20, 1000] m²: {len(suspeitos)} registros")
-                print(f"       Min: {area.min():.0f} m² | Max: {area.max():.0f} m²")
-        
-        # Quartos
-        if "quartos" in self.df.columns:
-            quartos = pd.to_numeric(self.df["quartos"], errors='coerce')
-            suspeitos = quartos[(quartos < 0) | (quartos > 10)]
-            if len(suspeitos) > 0:
-                print(f"   ⚠️  Quartos fora do intervalo [0, 10]: {len(suspeitos)} registros")
-    
-    def _duplicatas(self):
-        """Procura por registros duplicados"""
-        print(f"\n🔍 DUPLICATAS")
-        
-        # Duplicatas exatas
-        duplicadas_exatas = self.df.duplicated().sum()
-        if duplicadas_exatas > 0:
-            print(f"   ❌ {duplicadas_exatas} linhas completamente duplicadas (remover!)")
-        
-        # Duplicatas por ID
-        if "id_anuncio" in self.df.columns:
-            duplicadas_id = self.df["id_anuncio"].duplicated().sum()
-            if duplicadas_id > 0:
-                print(f"   ⚠️  {duplicadas_id} id_anuncio duplicados")
-                print(f"       Revisar se são duplicatas legítimas")
-        
-        if duplicadas_exatas == 0 and (
-            "id_anuncio" not in self.df.columns or 
-            self.df["id_anuncio"].duplicated().sum() == 0
-        ):
-            print(f"   ✓ Nenhuma duplicata detectada")
-    
-    def _valores_padrao(self):
-        """Checa padronização de valores"""
-        print(f"\n📋 PADRONIZAÇÃO")
-        
-        # Fontes
-        if "fonte" in self.df.columns:
-            fontes = self.df["fonte"].unique()
-            print(f"   Fontes encontradas: {', '.join(map(str, fontes))}")
-        
-        # Bairros
-        if "bairro" in self.df.columns:
-            bairros_unicos = self.df["bairro"].nunique()
-            print(f"   Bairros únicos: {bairros_unicos}")
-        
-        # Sim/Não
-        binarios = ["cozinha", "piscina", "churrasqueira", "mobiliado"]
-        for campo in binarios:
-            if campo in self.df.columns:
-                valores = self.df[campo].dropna().unique()
-                valores_str = [str(v).lower() for v in valores]
-                # Verificar se estão padronizados
-                if any(v not in ["sim", "não", "s", "n", "yes", "no"] for v in valores_str):
-                    print(f"   ⚠️  {campo}: valores não padronizados: {valores}")
-    
-    def _bairros(self):
-        """Lista bairros únicos"""
-        print(f"\n🏘️  BAIRROS REGISTRADOS")
-        
-        if "bairro" in self.df.columns:
-            bairros = self.df["bairro"].value_counts()
-            for bairro, count in bairros.items():
-                pct = (count / len(self.df)) * 100
-                print(f"   • {bairro}: {count} registros ({pct:.1f}%)")
-    
-    def _gerar_relatorio(self):
-        """Gera relatório final e salva"""
-        print(f"\n" + "="*70)
-        print("PRÓXIMOS PASSOS:")
-        print("="*70)
-        print("""
-1. Corrigir campos obrigatórios com > 5% de ausentes
-2. Remover duplicatas exatas
-3. Revisar outliers (podem ser dados reais ou erros de digitação)
-4. Padronizar valores de Sim/Não
-5. Verificar bairros (podem estar com espaços extras ou acentos)
-6. Salvar versão limpa como: casas_aluguel_umuarama_processed.csv
+        print("\n⚠️  OUTLIERS (regra do IQR × 1,5 e critérios de domínio)")
+        al = pd.to_numeric(self.df["aluguel_mensal"], errors="coerce")
+        q1, q3 = al.quantile([.25, .75])
+        sup = q3 + 1.5 * (q3 - q1)
+        out = self.df[al > sup]
+        print(f"   Aluguel > R$ {sup:,.0f}: {len(out)} casas -> " + ", ".join(f"{r.id_anuncio} (R$ {r.aluguel_mensal:,.0f})" for r in out.itertuples()))
+        if "area_m2" in self.df:
+            pm2 = al / pd.to_numeric(self.df["area_m2"], errors="coerce")
+            inc = self.df[(pm2 < config.MIN_PRECO_M2) | (pm2 > config.MAX_PRECO_M2)]
+            print(f"   Preço/m² fora de [{config.MIN_PRECO_M2:.0f}, {config.MAX_PRECO_M2:.0f}]: {len(inc)} -> "
+                  + ", ".join(f"{r.id_anuncio}" for r in inc.itertuples()))
+        print("   (investigar antes de remover: podem ser imóveis especiais ou erros de digitação)")
 
-Após isso, o dataset estará pronto para pré-processamento e análise exploratória.
-        """)
-        
-        print("\n✓ Validação concluída")
-        print(f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    def _duplicatas(self):
+        print("\n🔍 DUPLICATAS")
+        exatas = self.df.duplicated().sum()
+        ids = self.df["id_anuncio"].duplicated().sum()
+        fp = self.df.dropna(subset=["bairro", "aluguel_mensal", "quartos"]).duplicated(subset=["bairro", "aluguel_mensal", "quartos"]).sum()
+        print(f"   Linhas idênticas: {exatas} | ids repetidos: {ids} | mesmo bairro+aluguel+quartos: {fp}")
+        if exatas or ids:
+            self.problemas.append("há duplicatas exatas ou ids repetidos")
+        if fp:
+            self.problemas.append(f"{fp} par(es) com mesmo bairro, aluguel e quartos — possíveis repetidos com ficha "
+                                  "conflitante (mantidos; revisar manualmente)")
+
+    def _datas(self):
+        print("\n📅 DATAS DE COLETA")
+        print("   " + ", ".join(f"{k}: {v}" for k, v in self.df["data_coleta"].value_counts().sort_index().items()))
+
+    def _cobertura_regional(self):
+        col = "regiao" if "regiao" in self.df else "bairro"
+        print(f"\n🏘️  COBERTURA POR {col.upper()} (mínimo recomendado: {config.MIN_IMOVEIS_REGIAO})")
+        cont = self.df[col].value_counts(dropna=False)
+        poucos = cont[cont < config.MIN_IMOVEIS_REGIAO]
+        for k, v in cont.items():
+            print(f"   {'⚠️ ' if v < config.MIN_IMOVEIS_REGIAO else '✓'} {k}: {v}")
+        if col == "bairro":
+            print(f"   {len(poucos)} de {len(cont)} bairros têm menos de {config.MIN_IMOVEIS_REGIAO} casas — "
+                  "agregue em regiões (ver limpar_dataset.py) e sinalize baixa confiabilidade")
+
+    def _conclusao(self):
+        print("\n" + "=" * 70)
+        if self.problemas:
+            print("PONTOS DE ATENÇÃO:")
+            for p in self.problemas:
+                print(f"   • {p}")
+        else:
+            print("Nenhum problema crítico encontrado.")
+        print(f"\n✓ Validação concluída — {datetime.now():%Y-%m-%d %H:%M:%S}")
+
+
+def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("arquivo", nargs="?", default=str(config.PROCESSED))
+    ap.add_argument("--saida", help="também grava o relatório neste arquivo")
+    a = ap.parse_args()
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        ValidadorDataset(a.arquivo).validar()
+    print(buf.getvalue())
+    if a.saida:
+        Path(a.saida).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.saida).write_text(buf.getvalue(), encoding="utf-8")
 
 
 if __name__ == "__main__":
-    # Tentar ler do arquivo
-    if len(sys.argv) > 1:
-        caminho = sys.argv[1]
-    else:
-        # Tentar caminho padrão
-        caminho = "casas_aluguel_umuarama_raw.csv"
-        print(f"Nenhum arquivo especificado. Tentando: {caminho}")
-    
-    validador = ValidadorDataset(caminho)
-    validador.validar()
+    main()

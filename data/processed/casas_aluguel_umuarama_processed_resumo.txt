@@ -1,0 +1,124 @@
+RESUMO DO DATASET PROCESSADO
+======================================================================
+
+Arquivo: casas_aluguel_umuarama_processed.csv
+Processado em: 2026-11-14 16:54:55
+Registros brutos: 157 | finais: 136 | colunas: 39
+Coletas: 2026-09-15=68, 2026-11-14=68
+
+ETAPAS
+- 🔍 Linhas idênticas removidas: 0
+- 🔧 Tipos numéricos convertidos (aluguel/área/coords: float; cômodos: inteiro)
+- 🔒 Número de porta, CEP e telefone removidos de textos livres; mantida só a rua
+- 📋 Bairros: 92 grafias -> 75 bairros canônicos (2 sem bairro identificável)
+- ❌ 9 anúncios sem aluguel removidos (mgf_umuarama_017, seed_umuarama_076, seed_umuarama_078, seed_umuarama_079, seed_umuarama_080, seed_umuarama_081, seed_umuarama_082, seed_umuarama_083, seed_umuarama_084)
+- 🔁 Anúncios repetidos removidos: 12 (detalhes em duplicatas_removidas.csv)
+- 📐 preço/m² calculado para 51 casas (com área informada)
+- ⚠️  Outliers de aluguel (IQR, > R$ 7,862): 5 — mantidos e sinalizados
+- ⚠️  Preço/m² fora de [4, 60]: mgf_umuarama_005 (R$ 110/m²), deztop_293884078 (R$ 2/m²), deztop_250620463 (R$ 3/m²) — sinalizados como inconsistentes (excluídos do treino dos modelos)
+- 🗺️  Origem das coordenadas: osm_ruas=52, osm_enderecos=48, nao_localizado=28, osm_bairro=7, anuncio=1
+- 🗺️  Casas por região: Centro=43, Leste=38, Não localizada=28, Sul=17, Oeste=7, Norte=3
+
+POR FONTE
+fonte
+MGF IMÓVEIS (SEMENTE)      66
+DEZTOP (EX-MGF IMÓVEIS)    37
+PORTAL DA CIDADE           27
+WIMOVEIS                    1
+CASAMINEIRA                 1
+IMOBILIÁRIA UNIÃO           1
+ALDEMIR IMÓVEIS             1
+GARCIA IMÓVEIS              1
+BABOLIN IMÓVEIS             1
+
+ESTATÍSTICAS DESCRITIVAS
+       aluguel_mensal  area_m2  preco_m2  quartos  banheiros  vagas_garagem  suites
+count           136.0     51.0      51.0    133.0       81.0           70.0    99.0
+mean           2802.9    202.7      17.4      3.0        1.8            1.9     1.5
+std            2095.5    142.7      14.8      1.0        1.1            1.2     1.0
+min             650.0     52.0       2.1      1.0        1.0            1.0     1.0
+25%            1300.0     82.5      11.6      3.0        1.0            1.0     1.0
+50%            1975.0    154.2      16.2      3.0        1.0            2.0     1.0
+75%            3925.0    269.0      18.8      3.0        2.0            2.0     1.5
+max           12000.0    681.0     110.0      7.0        6.0            6.0     5.0
+
+POR REGIÃO
+                count  median    mean
+regiao                               
+Centro             43  2300.0  3144.0
+Leste              38  2600.0  2792.0
+Norte               3  1600.0  3083.0
+Não localizada     28  2500.0  3079.0
+Oeste               7  1350.0  2164.0
+Sul                17  1300.0  1724.0
+
+BAIRROS
+bairro
+Zona II                       14
+Zona I                         7
+Zona V                         5
+Zona III                       5
+Jardim São Cristóvão           4
+Zona VI                        4
+Paysage Essenza Condomínio     4
+Jardim Azaléia                 4
+Parque Interlagos II           4
+Zona VII                       4
+Jardim Alphaville              4
+Parque Cidade Jardim           3
+Parque Tokio                   3
+Jardim Yoshi                   3
+Jardim Cruzeiro                3
+Parque Interlagos              3
+Parque San Caetano             2
+Jardim Colibri                 2
+Jardim Imigrantes II           2
+Gleba Figueira                 2
+Parque Estância II             2
+Jardim Petrópolis              2
+Jardim dos Príncipes           2
+Parque Dom Bosco               2
+Jardim Aeroporto               2
+Jardim Pacífico                2
+Jardim Sakai                   1
+Parque Viena III               1
+Jardim Paraíso                 1
+Jardim Modelo                  1
+Jardim Metropolitano           1
+Parque das Jaboticabeiras      1
+Jardim Canadá                  1
+Jardim Los Angeles             1
+Jardim Veneza                  1
+Jardim San Martim              1
+Jardim São Cristóvão II        1
+Jardim Imperial I              1
+Zona IV                        1
+Jardim Veneza II               1
+Jardim San Fernando            1
+Jardim Cima                    1
+Jardim Real                    1
+Conjunto Ouro Preto            1
+Jardim das Cerejeiras          1
+Jardim América                 1
+Parque Monte Líbano            1
+Parque Belo Monte              1
+Jardim Birigui                 1
+Linha Bonita                   1
+Paysage Unique Condomínio      1
+Jardim Tamoio                  1
+Parque Alto da Paraná          1
+Parque Danielle                1
+Jardim Panorama                1
+Alto São Francisco             1
+Jardim Araxá                   1
+Munguba                        1
+Jardim Garças                  1
+Jardim Aratimbó                1
+<NA>                           1
+Parque Vitória Régia           1
+Zona I-A                       1
+Jardim Belvedere               1
+Parque Montreal                1
+Jardim Alto da Boa Vista       1
+Jardim Santa Clara             1
+Jardim Araucária               1

@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
-"""Scraper responsável para anúncios públicos de casas para alugar na OLX.
+"""Coletor responsável de anúncios públicos de CASAS PARA ALUGAR em Umuarama-PR.
 
-O programa não recolhe telefone, e-mail, nome de anunciante ou outros dados pessoais.
-Respeita robots.txt, aguarda pelo menos um segundo entre pedidos e grava rejeições
-no log para permitir auditoria e reprodução.
+Cada fonte tem um adaptador (ver ``config.SOURCES[...]["parser"]``):
+
+* ``portaldacidade`` — lê o JSON-LD (schema.org) da listagem e da página de
+  cada anúncio (quartos, banheiros, área, comodidades, bairro);
+* ``imobzi``         — lê o JSON embutido (ng-state) da plataforma Imobzi,
+  que já traz coordenadas aproximadas do imóvel;
+* ``html``           — extrai links pelo ``link_regex`` da fonte e lê a ficha
+  técnica do anúncio no texto da página.
+
+Regras éticas aplicadas:
+* consulta o robots.txt antes de cada domínio e respeita ``Crawl-delay``;
+* nunca grava telefone, e-mail, nome de corretor/proprietário nem a descrição
+  livre do anúncio (que costuma conter contatos) — só palavras-chave;
+* o endereço é reduzido ao nome da rua, sem número.
 """
 from __future__ import annotations
 
@@ -14,149 +25,21 @@ import logging
 import re
 import sys
 import time
+import unicodedata
 from datetime import date, datetime
 from html import unescape
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import urljoin, urlparse
-from urllib.robotparser import RobotFileParser
+from urllib.parse import unquote_plus, urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
 
 import config
 
-
-class Scraper:
-    def __init__(self, log: logging.Logger, source_key: str) -> None:
-        self.log = log
-        self.source_key = source_key
-        self.source = config.SOURCES[source_key]
-        self.session = requests.Session()
-        self.session.headers.update({
-            "User-Agent": config.USER_AGENT,
-            "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.7",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        })
-        self.last_request = 0.0
-        self.visited = 0
-        self.rejected = 0
-        self.duplicates = 0
-        self.errors = 0
-        self.rejection_reasons: dict[str, int] = {}
-        self.robot_parsers: dict[str, RobotFileParser] = {}
-        origin = f"{urlparse(self.source['base_url']).scheme}://{urlparse(self.source['base_url']).netloc}"
-        robot_url = origin + "/robots.txt"
-        self.robot_parser = RobotFileParser(robot_url)
-        try:
-            self.robot_parser.read()
-            self.robot_parsers[urlparse(self.source['base_url']).netloc] = self.robot_parser
-            self.log.info("robots.txt consultado com sucesso | fonte=%s | url=%s", source_key, robot_url)
-        except Exception as exc:
-            self.log.error("Não foi possível consultar robots.txt: %s", exc)
-            raise RuntimeError("A recolha foi interrompida porque robots.txt não pôde ser verificado") from exc
-
-    def allowed(self, url: str) -> bool:
-        netloc = urlparse(url).netloc
-        parser = self.robot_parsers.get(netloc)
-        if parser is None:
-            origin = f"{urlparse(url).scheme}://{netloc}"
-            parser = RobotFileParser(origin + "/robots.txt")
-            try:
-                parser.read()
-                self.robot_parsers[netloc] = parser
-            except Exception as exc:
-                self.log.error("Não foi possível consultar robots.txt de %s: %s", netloc, exc)
-                return False
-        allowed = parser.can_fetch(config.USER_AGENT, url)
-        if not allowed:
-            self.log.warning("URL bloqueada por robots.txt: %s", url)
-        return allowed
-
-    def get(self, url: str) -> str | None:
-        if not self.allowed(url):
-            return None
-        delay = config.REQUEST_INTERVAL - (time.monotonic() - self.last_request)
-        if delay > 0:
-            time.sleep(delay)
-        for attempt in range(1, config.RETRY_TENTATIVAS + 1):
-            try:
-                self.log.info("GET %s (tentativa %d/%d)", url, attempt, config.RETRY_TENTATIVAS)
-                response = self.session.get(url, timeout=config.TIMEOUT_SEGUNDOS)
-                self.last_request = time.monotonic()
-                self.visited += 1
-                response.raise_for_status()
-                return response.text
-            except requests.RequestException as exc:
-                self.errors += 1
-                self.log.error("Erro em %s: %s", url, exc)
-                if attempt < config.RETRY_TENTATIVAS:
-                    time.sleep(min(2 ** (attempt - 1), 5))
-        return None
-
-    def listing_urls(self) -> list[str]:
-        urls: list[str] = []
-        seen: set[str] = set()
-        for page in range(1, config.MAX_PAGES + 1):
-            url = self.source["page_url"](self.source["base_url"], page)
-            if not self.allowed(url):
-                self.log.error("Paginação interrompida: robots.txt não autoriza %s", url)
-                break
-            html = self.get(url)
-            if not html:
-                break
-            found = extract_listing_links(html, url)
-            before = len(urls)
-            for link in found:
-                if link not in seen:
-                    seen.add(link)
-                    urls.append(link)
-            self.log.info("Página %d: %d links novos", page, len(urls) - before)
-            if not found or len(urls) == before:
-                # A OLX repete o último conjunto quando não há mais páginas.
-                break
-        return urls
-
-    def run(self) -> list[dict[str, Any]]:
-        links = self.listing_urls()
-        self.log.info("Total de anúncios candidatos: %d", len(links))
-        records: list[dict[str, Any]] = []
-        ids: set[str] = set()
-        fingerprints: set[tuple[Any, ...]] = set()
-        for url in links:
-            html = self.get(url)
-            if not html:
-                self.reject(url, "página de detalhe inacessível")
-                continue
-            raw = parse_listing(html, url)
-            try:
-                record = normalize_and_validate(raw, url, self.source["source_name"])
-            except ValueError as exc:
-                self.reject(url, str(exc))
-                continue
-            # Dedup 1: pelo id (que embute o código do imóvel — CA20189, cod-2309...)
-            if record["id_anuncio"] in ids:
-                self.duplicates += 1
-                self.log.warning("Duplicata por id rejeitada: %s", url)
-                continue
-            # Dedup 2: por bairro+aluguel+quartos. Só aplica quando os três
-            # existem — assim linhas com campos vazios não colidem entre si.
-            fingerprint = (record["bairro"], record["aluguel_mensal"], record["quartos"])
-            if all(v not in ("", None) for v in fingerprint) and fingerprint in fingerprints:
-                self.duplicates += 1
-                self.log.warning("Duplicata por bairro/preço/quartos rejeitada: %s", url)
-                continue
-            ids.add(record["id_anuncio"])
-            fingerprints.add(fingerprint)
-            records.append(record)
-            self.log.info("Registo válido: %s", record["id_anuncio"])
-        return records
-
-    def reject(self, url: str, reason: str) -> None:
-        self.rejected += 1
-        self.rejection_reasons[reason] = self.rejection_reasons.get(reason, 0) + 1
-        self.log.warning("Anúncio rejeitado | URL=%s | motivo=%s", url, reason)
-
+# ---------------------------------------------------------------------------
+# Utilidades de texto e número
+# ---------------------------------------------------------------------------
 
 def clean_text(value: Any) -> str:
     if value is None:
@@ -164,183 +47,606 @@ def clean_text(value: Any) -> str:
     return re.sub(r"\s+", " ", unescape(str(value))).strip()
 
 
-def flatten_json(value: Any) -> Iterable[dict[str, Any]]:
-    if isinstance(value, dict):
-        yield value
-        for child in value.values():
-            yield from flatten_json(child)
-    elif isinstance(value, list):
-        for child in value:
-            yield from flatten_json(child)
+def parse_money(value: Any) -> float | None:
+    """Converte '3.200,00', '3,000.00', 'R$ 1.800', '1800.00' em float.
+
+    O parser anterior removia todos os pontos e trocava vírgula por ponto, o
+    que transformava 'R$3,000.00' (formato da Babolin) em 3.0.
+    """
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    s = re.sub(r"[^\d.,]", "", str(value))
+    if not s:
+        return None
+    if re.fullmatch(r"\d{1,3}(,\d{3})+(\.\d{1,2})?", s):        # 3,000.00 (US)
+        s = s.replace(",", "")
+    elif re.fullmatch(r"\d{1,3}(\.\d{3})+(,\d{1,2})?", s):      # 3.000,00 (BR)
+        s = s.replace(".", "").replace(",", ".")
+    elif re.fullmatch(r"\d+,\d{1,2}", s):                       # 3000,00
+        s = s.replace(",", ".")
+    elif re.fullmatch(r"\d+\.\d{3}", s):                        # 3.000 (BR milhar)
+        s = s.replace(".", "")
+    try:
+        return float(s)
+    except ValueError:
+        return None
 
 
-def parse_listing(html: str, url: str) -> dict[str, Any]:
-    soup = BeautifulSoup(html, "html.parser")
-    text = clean_text(soup.get_text(" "))
-    json_objects: list[dict[str, Any]] = []
-    for script in soup.find_all("script"):
-        raw = script.string or script.get_text()
-        if not raw or not raw.strip().startswith(("{", "[")):
-            continue
-        try:
-            json_objects.extend(flatten_json(json.loads(raw)))
-        except (json.JSONDecodeError, TypeError):
-            continue
-    title = clean_text(soup.find("h1").get_text(" ") if soup.find("h1") else "")
-    if not title:
-        meta = soup.find("meta", attrs={"property": "og:title"})
-        title = clean_text(meta.get("content") if meta else "")
-    description = ""
-    meta_desc = soup.find("meta", attrs={"name": "description"})
-    if meta_desc:
-        description = clean_text(meta_desc.get("content"))
-    return {"url": url, "title": title, "description": description, "text": text, "json": json_objects}
-
-
-def first_number(patterns: list[str], text: str, integer: bool = False) -> float | int | None:
+def first_int(patterns: list[str], text: str) -> int | None:
     for pattern in patterns:
-        match = re.search(pattern, text, flags=re.I)
-        if match:
-            value = match.group(1).replace(".", "").replace(",", ".")
+        m = re.search(pattern, text, flags=re.I)
+        if m:
             try:
-                number = float(value)
-                return int(number) if integer else number
+                return int(m.group(1))
             except ValueError:
                 continue
     return None
 
 
-def json_candidates(raw: dict[str, Any], keys: tuple[str, ...]) -> list[str]:
-    values: list[str] = []
-    for obj in raw.get("json", []):
-        for key, value in obj.items():
-            if key.lower() in keys and isinstance(value, (str, int, float)):
-                values.append(clean_text(value))
-    return values
+def first_area(patterns: list[str], text: str) -> float | None:
+    for pattern in patterns:
+        m = re.search(pattern, text, flags=re.I)
+        if m:
+            v = parse_money(m.group(1))
+            if v:
+                return v
+    return None
 
 
-def parse_price(text: str, raw: dict[str, Any]) -> float | None:
-    for value in json_candidates(raw, ("price", "value", "amount")):
-        n = first_number([r"(\d[\d.]*,\d{2})", r"(\d[\d.]*)"], value)
-        if n and config.MIN_ALUGUEL <= n <= config.MAX_ALUGUEL:
-            return float(n)
-    return first_number([r"R\$\s*([\d.]+(?:,\d{2})?)"], text)
+def slug_to_bairro(slug: str) -> str:
+    """'jardim+dos+principes' / 'jardim-araucaria' -> 'Jardim Dos Principes'."""
+    s = unquote_plus(slug).replace("-", " ").replace("+", " ")
+    return clean_text(s).title()
 
 
-def parse_id(url: str, raw: dict[str, Any]) -> str:
-    path = urlparse(url).path
-    match = re.search(r"-(\d{7,})/?$", path)
-    if match:
-        prefix = "olx" if "olx.com.br" in urlparse(url).netloc else "imovel"
-        return prefix + "_" + match.group(1)
-    code = re.search(r"(?:code|codigo|id)[-_]([A-Za-z0-9]+)", path, flags=re.I)
-    if code:
-        prefix = "uniao" if "imobiliariauniaoumuarama.com" in urlparse(url).netloc else "imovel"
-        return prefix + "_" + code.group(1)
-    for value in json_candidates(raw, ("id", "adid", "ad_id")):
-        if re.fullmatch(r"[A-Za-z0-9_-]{3,}", value):
-            return ("olx_" if "olx.com.br" in urlparse(url).netloc else "imovel_") + value
-    raise ValueError("id do anúncio não encontrado")
+def rua_sem_numero(endereco: str) -> str:
+    """'Rua Goiás, 5482' -> 'Rua Goiás' (privacidade: sem número/CEP)."""
+    s = re.sub(r"\b\d{5}-?\d{3}\b", "", endereco or "")
+    s = re.split(r",|\s-\s|\bn[ºo°.]?\s*\d", s)[0]
+    s = re.sub(r"\s\d+\s*$", "", s)
+    return clean_text(s).strip(" ,-")
 
 
-def generic_address(text: str, city: str = config.CITY) -> str:
-    # Mantém apenas a indicação de bairro/região, sem números de porta ou CEP.
-    match = re.search(r"(?:Umuarama\s*,\s*)?([^,|]+)", text, re.I)
-    value = clean_text(match.group(1) if match else city)
-    value = re.sub(r"\b\d{5}-?\d{3}\b", "", value)
-    value = re.sub(r"\b(?:n[ºo]?|número)\s*\d+\b", "", value, flags=re.I)
-    value = re.sub(r"\s+", " ", value).strip(" ,-")
-    return value or city
+PALAVRAS_CHAVE = {
+    "sobrado": ("sobrado",),
+    "alto padrão": ("alto padrão", "alto padrao", "fino acabamento", "luxo"),
+    "condomínio": ("condomínio", "condominio", "residencial fechado"),
+    "piscina": ("piscina",),
+    "churrasqueira": ("churrasqueira", "espaço gourmet", "area gourmet", "área gourmet"),
+    "mobiliada": ("mobiliad",),
+    "comercial ou residencial": ("comercial ou residencial", "residencial/comercial", "residencial ou comercial"),
+    "edícula": ("edícula", "edicula"),
+    "casa nova": ("casa nova", "imóvel novo", "nunca habitad"),
+    "ar condicionado": ("ar condicionado", "ar-condicionado", "split"),
+}
 
 
-def normalize_and_validate(raw: dict[str, Any], url: str, source_name: str) -> dict[str, Any]:
-    text = f"{raw.get('title', '')} {raw.get('description', '')} {raw.get('text', '')}"
-    rent = parse_price(text, raw)
-    area = first_number([r"(?:área|area)\s*(?:útil|total)?\s*[:\-]?\s*(\d[\d.,]*)\s*m(?:²|2)", r"(\d[\d.,]*)\s*m(?:²|2)"], text)
-    rooms = first_number([r"(?:quartos?|dormitórios?)\s*[:\-]?\s*(\d+)", r"(\d+)\s*quartos?"], text, True)
-    baths = first_number([r"(?:banheiros?)\s*[:\-]?\s*(\d+)", r"(\d+)\s*banheiros?"], text, True)
-    spaces = first_number([r"(?:vagas?|garagens?)\s*(?:de garagem)?\s*[:\-]?\s*(\d+)"], text, True)
-    suites = first_number([r"(?:suítes?|suites?)\s*[:\-]?\s*(\d+)", r"(\d+)\s*su[íi]tes?"], text, True)
+def keywords(texto: str) -> list[str]:
+    low = texto.lower()
+    return [k for k, termos in PALAVRAS_CHAVE.items() if any(t in low for t in termos)]
 
-    # --- ÚNICO motivo para descartar a linha: sem preço de aluguel. ---
-    # (a checagem de "é casa/aluguel/Umuarama" é feita antes, na coleta da fonte)
-    if rent is None or not config.MIN_ALUGUEL <= rent <= config.MAX_ALUGUEL:
-        raise ValueError(f"aluguel ausente ou fora do intervalo R$ {config.MIN_ALUGUEL:.0f}–R$ {config.MAX_ALUGUEL:.0f}")
 
-    # --- Campos secundários: NÃO rejeitam a linha. Fora da faixa -> vazio + aviso. ---
-    def sane(value, lo, hi, nome, warn):
-        if value is None:
-            return None
-        if lo <= value <= hi:
-            return value
-        warn.append(f"{nome}={value} fora de [{lo},{hi}] (esvaziado)")
-        return None
+def num_or_blank(value: Any) -> Any:
+    if value is None or value == "":
+        return ""
+    f = float(value)
+    return int(f) if f.is_integer() else round(f, 2)
+
+
+# ---------------------------------------------------------------------------
+# Normalização e validação (comum a todos os adaptadores)
+# ---------------------------------------------------------------------------
+
+def build_record(*, source_name: str, listing_id: str, url: str, bairro: str,
+                 aluguel: float | None, area=None, quartos=None, banheiros=None,
+                 vagas=None, suites=None, texto: str = "", rua: str = "",
+                 lat=None, lon=None, extras: Iterable[str] = ()) -> dict[str, Any]:
+    """Aplica as faixas de sanidade. Único motivo de descarte: sem aluguel."""
+    if aluguel is None or not config.MIN_ALUGUEL <= aluguel <= config.MAX_ALUGUEL:
+        raise ValueError(
+            f"aluguel ausente ou fora do intervalo R$ {config.MIN_ALUGUEL:.0f}–R$ {config.MAX_ALUGUEL:.0f}")
 
     warns: list[str] = []
-    area = sane(area, config.MIN_AREA, config.MAX_AREA, "area_m2", warns)
-    rooms = sane(rooms, 0, config.MAX_QUARTOS, "quartos", warns)
-    baths = sane(baths, 0, config.MAX_BANHEIROS, "banheiros", warns)
-    spaces = sane(spaces, 0, config.MAX_VAGAS, "vagas_garagem", warns)
-    suites = sane(suites, 0, config.MAX_SUITES, "suites", warns)
+
+    def sane(value, lo, hi, nome):
+        if value in (None, ""):
+            return None
+        if lo <= float(value) <= hi:
+            return value
+        warns.append(f"{nome}={value} fora de [{lo},{hi}] (esvaziado)")
+        return None
+
+    area = sane(area, config.MIN_AREA, config.MAX_AREA, "area_m2")
+    quartos = sane(quartos, 0, config.MAX_QUARTOS, "quartos")
+    banheiros = sane(banheiros, 0, config.MAX_BANHEIROS, "banheiros")
+    vagas = sane(vagas, 0, config.MAX_VAGAS, "vagas_garagem")
+    suites = sane(suites, 0, config.MAX_SUITES, "suites")
+
+    kws = keywords(texto)
+    for e in extras:
+        if e not in kws:
+            kws.append(e)
+    obs = "; ".join(kws)
     if warns:
-        # não interrompe: apenas anexa às observações para rastreabilidade
-        raw.setdefault("_warns", []).extend(warns)
+        obs = (obs + " | " if obs else "") + "; ".join(warns)
 
-    listing_id = parse_id(url, raw)
-    bairro = generic_address(raw.get("text", ""))
-    low = text.lower()
-
-    def yes_no(words: tuple[str, ...]) -> str:
-        """Sim se houver evidência; senão vazio (não afirma 'Não' sem base)."""
-        return "Sim" if any(w in low for w in words) else ""
-
-    def num_or_blank(value) -> object:
-        return "" if value is None else (int(value) if float(value).is_integer() else round(float(value), 2))
-
-    obs_parts = []
-    if any(w in low for w in ("ar condicionado", "ar-condicionado")):
-        obs_parts.append("Ar condicionado: Sim")
-    if warns:
-        obs_parts.append("; ".join(warns))
+    def tem(k):
+        return "Sim" if k in kws else ""
 
     return {
         "id_anuncio": listing_id, "data_coleta": date.today().isoformat(), "fonte": source_name,
-        "bairro": bairro[:120].title(), "endereco_generico": bairro[:160],
-        "aluguel_mensal": round(float(rent), 2),
-        "area_m2": num_or_blank(area),
-        "quartos": num_or_blank(rooms), "banheiros": num_or_blank(baths),
-        "vagas_garagem": num_or_blank(spaces), "suites": num_or_blank(suites),
-        "cozinha": yes_no(("cozinha", "fogão", "fogao", "geladeira")),
-        "piscina": yes_no(("piscina",)),
-        "churrasqueira": yes_no(("churrasqueira", "churrasco", "área de lazer", "area de lazer")),
-        "area_externa": "Grande" if any(w in low for w in ("quintal grande", "área externa grande", "area externa grande")) else "",
-        "condicao_imovel": "Bem conservado" if any(w in low for w in ("bem conservado", "reformado", "novo")) else "",
-        "mobiliado": yes_no(("mobiliado", "mobiliada")), "latitude": "", "longitude": "",
-        "url_anuncio": url, "observacoes": " | ".join(obs_parts),
+        "bairro": clean_text(bairro)[:120], "endereco_generico": rua_sem_numero(rua)[:160],
+        "aluguel_mensal": round(float(aluguel), 2), "area_m2": num_or_blank(area),
+        "quartos": num_or_blank(quartos), "banheiros": num_or_blank(banheiros),
+        "vagas_garagem": num_or_blank(vagas), "suites": num_or_blank(suites),
+        "cozinha": "Sim" if "cozinha" in texto.lower() else "",
+        "piscina": tem("piscina"), "churrasqueira": tem("churrasqueira"),
+        "area_externa": "Grande" if re.search(r"quintal (grande|amplo)|área externa (grande|ampla)", texto, re.I) else "",
+        "condicao_imovel": "Novo" if "casa nova" in kws else "",
+        "mobiliado": tem("mobiliada"),
+        "latitude": "" if lat is None else round(float(lat), 6),
+        "longitude": "" if lon is None else round(float(lon), 6),
+        "url_anuncio": url, "observacoes": obs,
     }
 
 
-def extract_listing_links(html: str, base_url: str) -> list[str]:
-    soup = BeautifulSoup(html, "html.parser")
-    base_host = urlparse(base_url).netloc
-    links: list[str] = []
-    for anchor in soup.find_all("a", href=True):
-        href = urljoin(base_url, anchor["href"])
-        parsed = urlparse(href)
-        is_olx = parsed.netloc.endswith("olx.com.br") and "/imoveis/" in parsed.path and re.search(r"-\d{7,}/?$", parsed.path)
-        is_imovelweb = parsed.netloc.endswith("imovelweb.com.br") and ("/propriedades/" in parsed.path or "/casa-" in parsed.path)
-        is_uniao = parsed.netloc.endswith("imobiliariauniaoumuarama.com") and "/imovel/" in parsed.path
-        # O conjunto deve conter casas; a plataforma continua a ser apenas rastreabilidade.
-        if is_imovelweb or is_uniao:
-            path_low = parsed.path.lower()
-            is_house = "casa" in path_low
-        else:
-            is_house = True
-        if (parsed.netloc == base_host or parsed.netloc.endswith("olx.com.br")) and is_house and (is_olx or is_imovelweb or is_uniao):
-            clean = f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
-            if clean not in links:
-                links.append(clean)
-    return links
+# ---------------------------------------------------------------------------
+# Cliente HTTP com robots.txt, Crawl-delay e retentativas
+# ---------------------------------------------------------------------------
+
+class Robots:
+    """Leitor de robots.txt (RFC 9309) com curingas '*' e '$'.
+
+    Substitui o ``urllib.robotparser``, que (1) baixa o arquivo com o
+    User-Agent 'Python-urllib' — alguns sites respondem 403 e ele passa a
+    proibir TUDO — e (2) não entende curingas como ``Disallow: /*?``.
+    Vale a regra mais longa que casa com o caminho; empate favorece Allow.
+    """
+
+    def __init__(self, texto: str, user_agent: str) -> None:
+        self.rules: list[tuple[bool, str]] = []
+        self.delay: float | None = None
+        grupos: list[tuple[list[str], list[str]]] = []
+        agentes: list[str] = []
+        linhas: list[str] = []
+        ultimo_era_agente = False
+        for bruto in texto.splitlines():
+            linha = bruto.split("#", 1)[0].strip()
+            if ":" not in linha:
+                continue
+            campo, valor = (p.strip() for p in linha.split(":", 1))
+            campo = campo.lower()
+            if campo == "user-agent":
+                if not ultimo_era_agente and agentes:
+                    grupos.append((agentes, linhas))
+                    agentes, linhas = [], []
+                agentes.append(valor.lower())
+                ultimo_era_agente = True
+            else:
+                linhas.append(f"{campo}:{valor}")
+                ultimo_era_agente = False
+        if agentes:
+            grupos.append((agentes, linhas))
+        token = user_agent.split("/")[0].lower()
+        escolhido = next((g for g in grupos if any(a != "*" and a in token for a in g[0])), None) \
+            or next((g for g in grupos if "*" in g[0]), None)
+        for item in (escolhido[1] if escolhido else []):
+            campo, valor = item.split(":", 1)
+            if campo in ("allow", "disallow") and valor:
+                self.rules.append((campo == "allow", valor))
+            elif campo == "crawl-delay":
+                try:
+                    self.delay = float(valor)
+                except ValueError:
+                    pass
+
+    @staticmethod
+    def _casa(padrao: str, caminho: str) -> bool:
+        rx = re.escape(padrao).replace(r"\*", ".*")
+        if rx.endswith(r"\$"):
+            rx = rx[:-2] + "$"
+        return re.match(rx, caminho) is not None
+
+    def can_fetch(self, url: str) -> bool:
+        p = urlparse(url)
+        caminho = (p.path or "/") + (f"?{p.query}" if p.query else "")
+        melhor: tuple[int, bool] | None = None
+        for allow, padrao in self.rules:
+            if self._casa(padrao, caminho):
+                cand = (len(padrao), allow)
+                if melhor is None or cand[0] > melhor[0] or (cand[0] == melhor[0] and allow):
+                    melhor = cand
+        return True if melhor is None else melhor[1]
+
+
+class Cliente:
+    def __init__(self, log: logging.Logger) -> None:
+        self.log = log
+        self.session = requests.Session()
+        self.session.headers.update({
+            "User-Agent": config.USER_AGENT,
+            "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.7",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        })
+        self.robots: dict[str, Robots | None] = {}
+        self.last_request: dict[str, float] = {}
+        self.visited = 0
+        self.errors = 0
+
+    def _robots(self, url: str) -> Robots | None:
+        netloc = urlparse(url).netloc
+        if netloc not in self.robots:
+            origin = f"{urlparse(url).scheme}://{netloc}"
+            try:
+                r = self.session.get(origin + "/robots.txt", timeout=config.TIMEOUT_SEGUNDOS)
+            except requests.RequestException as exc:  # sem robots legível -> não coleta
+                self.log.error("robots.txt de %s inacessível: %s", netloc, exc)
+                self.robots[netloc] = None
+                return None
+            if r.status_code in (401, 403):
+                self.log.error("robots.txt de %s respondeu %d — coleta não autorizada", netloc, r.status_code)
+                self.robots[netloc] = None
+            elif r.status_code >= 400:   # 404 etc.: sem restrições declaradas
+                self.robots[netloc] = Robots("", config.USER_AGENT)
+            else:
+                self.robots[netloc] = Robots(r.text, config.USER_AGENT)
+            rb = self.robots[netloc]
+            self.log.info("robots.txt consultado | %s | regras=%d | crawl-delay=%s",
+                          origin, len(rb.rules) if rb else -1, rb.delay if rb else None)
+        return self.robots[netloc]
+
+    def allowed(self, url: str) -> bool:
+        rp = self._robots(url)
+        ok = bool(rp and rp.can_fetch(url))
+        if not ok:
+            self.log.warning("URL não autorizada pelo robots.txt: %s", url)
+        return ok
+
+    def get(self, url: str) -> str | None:
+        if not self.allowed(url):
+            return None
+        netloc = urlparse(url).netloc
+        crawl_delay = self.robots[netloc].delay or 0
+        intervalo = max(config.REQUEST_INTERVAL, float(crawl_delay))
+        espera = intervalo - (time.monotonic() - self.last_request.get(netloc, 0.0))
+        if espera > 0:
+            time.sleep(espera)
+        for tentativa in range(1, config.RETRY_TENTATIVAS + 1):
+            try:
+                self.log.info("GET %s (tentativa %d/%d)", url, tentativa, config.RETRY_TENTATIVAS)
+                resp = self.session.get(url, timeout=config.TIMEOUT_SEGUNDOS)
+                self.last_request[netloc] = time.monotonic()
+                self.visited += 1
+                resp.raise_for_status()
+                resp.encoding = resp.apparent_encoding if not resp.encoding or resp.encoding.lower() == "iso-8859-1" else resp.encoding
+                return resp.text
+            except requests.RequestException as exc:
+                self.errors += 1
+                self.log.error("Erro em %s: %s", url, exc)
+                if tentativa < config.RETRY_TENTATIVAS:
+                    time.sleep(min(2 ** tentativa, 10))
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Adaptadores
+# ---------------------------------------------------------------------------
+
+class Adaptador:
+    def __init__(self, cliente: Cliente, log: logging.Logger, key: str) -> None:
+        self.c = cliente
+        self.log = log
+        self.key = key
+        self.src = config.SOURCES[key]
+        self.rejected = 0
+        self.rejection_reasons: dict[str, int] = {}
+
+    def reject(self, url: str, reason: str) -> None:
+        self.rejected += 1
+        self.rejection_reasons[reason] = self.rejection_reasons.get(reason, 0) + 1
+        self.log.warning("Anúncio rejeitado | URL=%s | motivo=%s", url, reason)
+
+    def paginas(self) -> Iterable[tuple[str, str]]:
+        vistos = set()
+        for page in range(1, min(self.src.get("max_pages", config.MAX_PAGES), config.MAX_PAGES) + 1):
+            url = self.src["page_url"](self.src["base_url"], page)
+            if url in vistos:
+                break
+            vistos.add(url)
+            html = self.c.get(url)
+            if not html:
+                break
+            yield url, html
+
+    def run(self) -> list[dict[str, Any]]:  # pragma: no cover - interface
+        raise NotImplementedError
+
+
+def _jsonld_blocks(html: str) -> list[Any]:
+    out = []
+    for m in re.finditer(r'<script[^>]*application/ld\+json[^>]*>(.*?)</script>', html, re.S):
+        try:
+            out.append(json.loads(m.group(1)))
+        except json.JSONDecodeError:
+            continue
+    return out
+
+
+def _walk(o: Any) -> Iterable[dict]:
+    if isinstance(o, dict):
+        yield o
+        for v in o.values():
+            yield from _walk(v)
+    elif isinstance(o, list):
+        for v in o:
+            yield from _walk(v)
+
+
+class PortalDaCidade(Adaptador):
+    """Listagem em JSON-LD (ItemList) + ficha estruturada em cada anúncio."""
+
+    def run(self) -> list[dict[str, Any]]:
+        itens: dict[str, dict] = {}
+        for url, html in self.paginas():
+            for bloco in _jsonld_blocks(html):
+                for obj in _walk(bloco):
+                    if obj.get("@type") == "ListItem" and isinstance(obj.get("item"), dict):
+                        it = obj["item"]
+                        m = re.search(r"-(\d+)$", it.get("url", ""))
+                        offer = it.get("offers") or {}
+                        if m and offer.get("category", "").lower().startswith("alug"):
+                            itens[m.group(1)] = it
+            # links reais da página (o caminho /casa-para-alugar/ é o canônico)
+            for href in re.findall(r'href="([^"]*/imoveis/casa-para-alugar/[^"]+-(\d+))"', html):
+                if href[1] in itens:
+                    itens[href[1]]["_detail_url"] = urljoin(url, href[0])
+        self.log.info("[%s] anúncios na listagem: %d", self.key, len(itens))
+
+        records = []
+        for lid, it in itens.items():
+            url = it.get("_detail_url") or it.get("url")
+            preco = parse_money((it.get("offers") or {}).get("price"))
+            casa = {}
+            html = self.c.get(url)
+            if html:
+                for bloco in _jsonld_blocks(html):
+                    for obj in _walk(bloco):
+                        if obj.get("@type") in ("House", "SingleFamilyResidence") and lid in str(obj.get("@id", "")):
+                            casa = obj
+                            break
+                    if casa:
+                        break
+            if not casa:  # usa o resumo da listagem
+                casa = (it.get("offers") or {}).get("itemOffered") or {}
+            addr = casa.get("address") or {}
+            amen = [a.get("name", "") for a in casa.get("amenityFeature", []) if a.get("value")]
+            texto = " ".join([clean_text(casa.get("name")), clean_text(casa.get("description")), " ".join(amen)])
+            area = (casa.get("floorSize") or {}).get("value")
+            banh = casa.get("numberOfBathroomsTotal")
+            # Descrição livre: "01 suíte com hidro, 02 suítes simples, 02 quartos".
+            desc = clean_text(casa.get("description"))
+            soma_suites = sum(int(n) for n in re.findall(r"\b(\d{1,2})\s*su[íi]tes?\b", desc, re.I))
+            soma_quartos = sum(int(n) for n in re.findall(r"\b(\d{1,2})\s*(?:quartos?|dormit[óo]rios?)\b", desc, re.I))
+            suites = soma_suites or None
+            quartos = casa.get("numberOfBedrooms")
+            if quartos is None and (soma_suites or soma_quartos):
+                quartos = soma_suites + soma_quartos   # total de dormitórios
+            try:
+                records.append(build_record(
+                    source_name=self.src["source_name"], listing_id=f"portal_{lid}", url=url,
+                    bairro=addr.get("addressLocality", ""), aluguel=preco, area=area,
+                    quartos=quartos, banheiros=banh, suites=suites,
+                    vagas=first_int([r"(\d+)\s*vagas?", r"garagem\s*(?:para|p/)?\s*(\d+)\s*carros?"], texto),
+                    texto=texto, rua=addr.get("streetAddress", ""),
+                    extras=[a.lower() for a in amen if a.lower() in ("piscina", "churrasqueira")],
+                ))
+            except ValueError as exc:
+                self.reject(url, str(exc))
+        return records
+
+
+class Imobzi(Adaptador):
+    """Plataforma Imobzi: JSON 'ng-state' com imóveis (inclui lat/lon)."""
+
+    TIPOS_CASA = ("casa", "sobrado")
+
+    def run(self) -> list[dict[str, Any]]:
+        records = []
+        for url, html in self.paginas():
+            m = re.search(r'<script id="ng-state" type="application/json">(.*?)</script>', html, re.S)
+            if not m:
+                self.log.warning("[%s] ng-state não encontrado", self.key)
+                continue
+            estado = json.loads(m.group(1))
+            for obj in _walk(estado):
+                if not ("rental_value" in obj and "latitude" in obj and "code" in obj):
+                    continue
+                tipo = str(obj.get("property_type", "")).lower()
+                det_url = urljoin(url, obj.get("site_url", ""))
+                if obj.get("finality") != "residential" or not any(t in tipo for t in self.TIPOS_CASA):
+                    continue
+                suites = obj.get("suite") or 0
+                quartos = (obj.get("bedroom") or 0) + suites  # 'bedroom' exclui suítes
+                texto = " ".join([tipo, clean_text(obj.get("site_title")), clean_text(obj.get("site_description"))])
+                try:
+                    records.append(build_record(
+                        source_name=self.src["source_name"], listing_id=f"uniao_{obj['code']}", url=det_url,
+                        bairro=obj.get("neighborhood", ""), aluguel=parse_money(obj.get("rental_value")),
+                        area=obj.get("useful_area") or obj.get("area") or None,
+                        quartos=quartos or None, banheiros=obj.get("bathroom") or None,
+                        vagas=obj.get("garage"), suites=suites, texto=texto,
+                        lat=obj.get("latitude"), lon=obj.get("longitude"),
+                        extras=["sobrado"] if "sobrado" in tipo else [],
+                    ))
+                except ValueError as exc:
+                    self.reject(det_url, str(exc))
+        return records
+
+
+class HtmlGenerico(Adaptador):
+    """Sites com ficha técnica em texto (Aldemir, Garcia, Babolin)."""
+
+    def run(self) -> list[dict[str, Any]]:
+        padrao = re.compile(self.src["link_regex"], re.I)
+        links: dict[str, tuple[str, str]] = {}
+        for url, html in self.paginas():
+            soup = BeautifulSoup(html, "html.parser")
+            for a in soup.find_all("a", href=True):
+                href = urljoin(url, a["href"])
+                p = urlparse(href)
+                if p.netloc != urlparse(url).netloc:
+                    continue
+                m = padrao.search(p.path)
+                if m:
+                    links.setdefault(m.group("id"), (f"{p.scheme}://{p.netloc}{p.path}", m.group("bairro")))
+        self.log.info("[%s] links de casas: %d", self.key, len(links))
+
+        records = []
+        for lid, (url, bairro_slug) in links.items():
+            html = self.c.get(url)
+            if not html:
+                self.reject(url, "página de detalhe inacessível")
+                continue
+            soup = BeautifulSoup(html, "html.parser")
+            for tag in soup(["script", "style", "noscript"]):
+                tag.decompose()
+            texto = clean_text(soup.get_text(" "))
+            preco = None
+            for pat in (r"Aluguel\s*R\$\s*([\d.,]+)", r"Loca[çc][ãa]o\s*R\$\s*([\d.,]+)", r"R\$\s*([\d.,]+)"):
+                mm = re.search(pat, texto, re.I)
+                if mm:
+                    preco = parse_money(mm.group(1))
+                    break
+            suites = first_int([r"Su[íi]tes?\s*[:\-]?\s*(\d+)"], texto)
+            quartos = first_int([r"Quartos?\s*[:\-]?\s*(\d+)", r"(\d+)\s*Dormit[óo]rios?", r"Dormit[óo]rios?\s*[:\-]?\s*(\d+)"], texto)
+            if quartos is not None and self.src.get("quartos_exclui_suites"):
+                quartos += suites or 0
+            area = first_area([r"[ÁA]rea\s*(?:Constru[íi]da|Constru[çc][ãa]o|[ÚU]til)\s*[:\-]?\s*([\d.,]+)",
+                               r"[ÁA]rea\s*Total\s*[:\-]?\s*([\d.,]+)\s*m"], texto)
+            rua = ""
+            mr = re.search(r"Endere[çc]o\s*[:\-]?\s*((?:Rua|Av\.?|Avenida|Travessa|Alameda)[^,|]{2,60})", texto, re.I)
+            if mr:
+                rua = mr.group(1)
+            try:
+                records.append(build_record(
+                    source_name=self.src["source_name"], listing_id=f"{self.key}_{lid}", url=url,
+                    bairro=slug_to_bairro(bairro_slug), aluguel=preco, area=area, quartos=quartos,
+                    banheiros=first_int([r"Banheiros?\s*[:\-]?\s*(\d+)"], texto),
+                    vagas=first_int([r"(\d{1,2})\s*Vagas?\b", r"Vagas?\s*[:\-]?\s*(\d{1,2})\b(?![.,]\d)",
+                                     r"Garagem\s*[:\-]?\s*(\d{1,2})\b"], texto),
+                    suites=suites, texto=texto, rua=rua,
+                ))
+            except ValueError as exc:
+                self.reject(url, str(exc))
+        return records
+
+
+class Deztop(Adaptador):
+    """Deztop (ex-MGF): listagem paginada + JSON-LD Product/BreadcrumbList.
+
+    O 1º trecho da descrição é um resumo gerado pelo portal, padronizado:
+    'A casa possui 3 Dormitórios, 1 Suíte, 2 Banheiros, 2 Vagas na garagem,
+    100m² de Área e está localizado em Rua X, Umuarama, Pr para alugar por…'.
+    'Dormitórios' já inclui as suítes ('5 Dormitórios (sendo 3 Suítes)').
+    """
+
+    def paginas(self) -> Iterable[tuple[str, str]]:
+        padrao = re.compile(self.src["link_regex"])
+        vistos: set[str] = set()
+        for page in range(1, self.src.get("max_pages", config.MAX_PAGES) + 1):
+            url = self.src["page_url"](self.src["base_url"], page)
+            html = self.c.get(url)
+            if not html:
+                break
+            ids = set(m.group("id") for m in padrao.finditer(html))
+            if not ids - vistos:
+                break
+            vistos |= ids
+            yield url, html
+
+    def run(self) -> list[dict[str, Any]]:
+        padrao = re.compile(r'href="(https://deztop\.com/br/imovel/(\d+)/casa[^"]*)"')
+        links: dict[str, str] = {}
+        for _, html in self.paginas():
+            # só a grade de resultados (antes de "Imóveis próximos"/rodapé)
+            for href, lid in padrao.findall(html):
+                links.setdefault(lid, href)
+        self.log.info("[%s] links de casas: %d", self.key, len(links))
+
+        records = []
+        for lid, url in links.items():
+            html = self.c.get(url)
+            if not html:
+                self.reject(url, "página de detalhe inacessível")
+                continue
+            produto, bairro = {}, ""
+            for bloco in _jsonld_blocks(html):
+                for obj in _walk(bloco):
+                    if obj.get("@type") == "Product" and lid in json.dumps(obj.get("offers", {})):
+                        produto = obj
+                    if obj.get("@type") == "BreadcrumbList":
+                        nomes = [i.get("name", "") for i in obj.get("itemListElement", [])]
+                        # Deztop > Imóveis > PR > Umuarama > <bairro> > Para alugar > ...
+                        if len(nomes) >= 6 and nomes[3].lower() == "umuarama" and "alugar" in nomes[5].lower():
+                            bairro = nomes[4]
+            if not produto:
+                self.reject(url, "JSON-LD do anúncio ausente")
+                continue
+            if not bairro:
+                self.reject(url, "não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)")
+                continue
+            desc =clean_text(re.sub(r"<[^>]+>", " ", produto.get("description", "")))
+            resumo = desc.split(" para alugar por")[0]
+            preco = parse_money((produto.get("offers") or {}).get("price"))
+            rua = ""
+            mr = re.search(r"localizad[oa] em ((?:Rua|Avenida|Av\.?|Travessa|Alameda|Rodovia|Estrada)[^,]+),", resumo, re.I)
+            if mr:
+                rua = mr.group(1)
+            try:
+                records.append(build_record(
+                    source_name=self.src["source_name"], listing_id=f"deztop_{lid}", url=url,
+                    bairro=bairro, aluguel=preco,
+                    area=first_area([r"([\d.,]+)\s*m²\s*de\s*[ÁA]rea"], resumo),
+                    quartos=first_int([r"(\d+)\s*Dormit[óo]rios?"], resumo),
+                    banheiros=first_int([r"(\d+)\s*Banheiros?"], resumo),
+                    vagas=first_int([r"(\d+)\s*Vagas?"], resumo),
+                    suites=first_int([r"(\d+)\s*Su[íi]tes?"], resumo),
+                    texto=desc, rua=rua,
+                ))
+            except ValueError as exc:
+                self.reject(url, str(exc))
+        return records
+
+
+ADAPTADORES = {"portaldacidade": PortalDaCidade, "imobzi": Imobzi, "html": HtmlGenerico, "deztop": Deztop}
+
+
+# ---------------------------------------------------------------------------
+# Deduplicação e saída
+# ---------------------------------------------------------------------------
+
+def _norm(s: Any) -> str:
+    s = unicodedata.normalize("NFKD", str(s or "")).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]", "", s)
+
+
+def deduplicar(records: list[dict[str, Any]], log: logging.Logger) -> tuple[list[dict[str, Any]], int]:
+    """Remove repetidos por id e por (bairro, aluguel, quartos) — o mesmo
+    imóvel costuma aparecer na imobiliária e no agregador."""
+    out, ids, fps, dup = [], set(), set(), 0
+    # registros com coordenadas primeiro: em caso de empate, ficamos com eles
+    for r in sorted(records, key=lambda r: r["latitude"] == ""):
+        fp = (_norm(r["bairro"]), r["aluguel_mensal"], r["quartos"])
+        if r["id_anuncio"] in ids or (all(v not in ("", None) for v in fp) and fp in fps):
+            dup += 1
+            log.warning("Duplicata descartada: %s (%s)", r["id_anuncio"], r["url_anuncio"])
+            continue
+        ids.add(r["id_anuncio"])
+        fps.add(fp)
+        out.append(r)
+    return out, dup
 
 
 def write_csv(records: list[dict[str, Any]], output: Path) -> None:
@@ -353,64 +659,67 @@ def write_csv(records: list[dict[str, Any]], output: Path) -> None:
 
 def configure_logging(path: Path) -> logging.Logger:
     path.parent.mkdir(parents=True, exist_ok=True)
-    logger = logging.getLogger("olx_scraper")
+    logger = logging.getLogger("coletor_umuarama")
     logger.setLevel(logging.INFO)
     logger.handlers.clear()
     handler = logging.FileHandler(path, encoding="utf-8")
     handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s"))
     logger.addHandler(handler)
-    logger.addHandler(logging.StreamHandler(sys.stdout))
+    stream = logging.StreamHandler(sys.stdout)
+    stream.setFormatter(logging.Formatter("%(levelname)s | %(message)s"))
+    logger.addHandler(stream)
     return logger
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     todas = list(config.SOURCES)
-    # --fontes: lista separada por vírgula (ex: aldemir,garcia,mgf) ou "todas".
-    parser.add_argument("--fontes", "--source", dest="fontes", default="todas",
-                        help=f"fontes separadas por vírgula, ou 'todas'. Disponíveis: {', '.join(todas)}")
-    parser.add_argument("--cidade", default="umuarama")
-    parser.add_argument("--output", default="data/raw/casas_aluguel_umuarama_raw.csv")
-    parser.add_argument("--log", default="data/logs/coleta_log.txt")
+    parser.add_argument("--fontes", "--source", dest="fontes", default="padrao",
+                        help=f"fontes separadas por vírgula, 'padrao' ({','.join(config.FONTES_PADRAO)}) "
+                             f"ou 'todas'. Disponíveis: {', '.join(todas)}")
+    parser.add_argument("--output", default=str(config.RAW_COLETADAS))
+    parser.add_argument("--log", default=str(config.DATA_DIR / "logs" / "coleta_log.txt"))
     parser.add_argument("--min-registros", type=int, default=config.MIN_REGISTROS)
     args = parser.parse_args()
 
-    # Resolve a lista de fontes e valida contra o config.
-    if args.fontes.strip().lower() == "todas":
-        source_keys = todas
+    f = args.fontes.strip().lower()
+    if f == "todas":
+        keys = todas
+    elif f == "padrao":
+        keys = list(config.FONTES_PADRAO)
     else:
-        source_keys = [f.strip() for f in args.fontes.split(",") if f.strip()]
-        invalidas = [f for f in source_keys if f not in config.SOURCES]
+        keys = [x.strip() for x in args.fontes.split(",") if x.strip()]
+        invalidas = [x for x in keys if x not in config.SOURCES]
         if invalidas:
-            parser.error(f"fonte(s) desconhecida(s): {', '.join(invalidas)}. "
-                         f"Disponíveis: {', '.join(todas)}")
+            parser.error(f"fonte(s) desconhecida(s): {', '.join(invalidas)}. Disponíveis: {', '.join(todas)}")
 
     started = datetime.now().astimezone()
     log = configure_logging(Path(args.log))
-    log.info("Início da coleta | início=%s | cidade=%s | fontes=%s", started.isoformat(), args.cidade, ",".join(source_keys))
+    log.info("Início da coleta | início=%s | cidade=%s | fontes=%s", started.isoformat(), config.CITY, ",".join(keys))
+    cliente = Cliente(log)
+    todos: list[dict[str, Any]] = []
+    rejeitados = 0
     try:
-        all_records: list[dict[str, Any]] = []
-        all_ids: set[str] = set()
-        total_visited = total_rejected = total_duplicates = total_errors = 0
-        for source_key in source_keys:
-            log.info("Início da fonte: %s", source_key)
-            scraper = Scraper(log, source_key)
-            for record in scraper.run():
-                if record["id_anuncio"] not in all_ids:
-                    all_ids.add(record["id_anuncio"])
-                    all_records.append(record)
-                else:
-                    total_duplicates += 1
-            total_visited += scraper.visited
-            total_rejected += scraper.rejected
-            total_duplicates += scraper.duplicates
-            total_errors += scraper.errors
-        write_csv(all_records, Path(args.output))
-        finished = datetime.now().astimezone()
-        elapsed = (finished - started).total_seconds()
-        log.info("Fim da coleta | fim=%s | visitados=%d | válidos=%d | rejeitados=%d | duplicatas=%d | erros=%d | duração=%.2fs", finished.isoformat(), total_visited, len(all_records), total_rejected, total_duplicates, total_errors, elapsed)
-        if len(all_records) < args.min_registros:
-            log.error("Meta não atingida: %d válidos; mínimo solicitado=%d", len(all_records), args.min_registros)
+        for key in keys:
+            log.info("Início da fonte: %s", key)
+            ad = ADAPTADORES[config.SOURCES[key]["parser"]](cliente, log, key)
+            try:
+                regs = ad.run()
+            except Exception:
+                log.exception("Falha na fonte %s — seguindo para a próxima", key)
+                regs = []
+            log.info("Fim da fonte %s | válidos=%d | rejeitados=%d | motivos=%s", key, len(regs), ad.rejected, ad.rejection_reasons)
+            todos.extend(regs)
+            rejeitados += ad.rejected
+        finais, dup = deduplicar(todos, log)
+        write_csv(finais, Path(args.output))
+        elapsed = (datetime.now().astimezone() - started).total_seconds()
+        log.info("Fim da coleta | visitados=%d | válidos=%d | rejeitados=%d | duplicatas=%d | erros=%d | duração=%.1fs | saída=%s",
+                 cliente.visited, len(finais), rejeitados, dup, cliente.errors, elapsed, args.output)
+        if len(finais) < args.min_registros:
+            log.error("Meta não atingida: %d válidos; mínimo solicitado=%d", len(finais), args.min_registros)
             return 2
         return 0
     except Exception:

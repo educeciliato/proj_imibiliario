@@ -1,0 +1,13 @@
+removido,mantido,bairro,aluguel,regra
+mgf_umuarama_014,deztop_295195234,Zona II,750.0,"B: mesmo bairro e aluguel, ficha compatível"
+mgf_umuarama_053,mgf_umuarama_018,Jardim Paineiras,4900.0,"C: mesmo aluguel/quartos e texto em comum ['neto', 'romagna']"
+mgf_umuarama_024,deztop_310355305,Zona I,7900.0,"B: mesmo bairro e aluguel, ficha compatível"
+deztop_310355506,deztop_310355305,Zona I,7900.0,"A: mesmo bairro, rua, área e aluguel"
+mgf_umuarama_030,deztop_311717806,Zona I-A,4500.0,"B: mesmo bairro e aluguel, ficha compatível"
+mgf_umuarama_031,deztop_311717806,Zona I-A,4500.0,"B: mesmo bairro e aluguel, ficha compatível"
+deztop_311718028,deztop_311717806,Zona I-A,4500.0,"B: mesmo bairro e aluguel, ficha compatível"
+mgf_umuarama_039,deztop_302227770,Zona III,1700.0,"B: mesmo bairro e aluguel, ficha compatível"
+mgf_umuarama_055,deztop_309636604,Jardim Garças,1300.0,"B: mesmo bairro e aluguel, ficha compatível"
+deztop_309064247,deztop_309063259,Paysage Essenza Condomínio,4900.0,"A: mesmo bairro, rua, área e aluguel"
+deztop_312519160,deztop_312518771,Parque Vitória Régia,5900.0,"A: mesmo bairro, rua, área e aluguel"
+deztop_312464988,deztop_312415134,Zona I,3600.0,"A: mesmo bairro, rua, área e aluguel"

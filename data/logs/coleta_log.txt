@@ -21,3 +21,340 @@
 2026-09-21 20:30:56,643 | INFO | Total de anúncios candidatos: 0
 2026-09-21 20:30:56,643 | INFO | Fim da coleta | fim=2026-09-21T20:30:56.643998-03:00 | visitados=3 | válidos=0 | rejeitados=0 | duplicatas=0 | erros=0 | duração=13.22s
 2026-09-21 20:30:56,643 | ERROR | Meta não atingida: 0 válidos; mínimo solicitado=120
+2026-11-14 15:42:35,118 | INFO | Início da coleta | início=2026-11-14T15:42:35.116098-03:00 | cidade=Umuarama | fontes=portaldacidade,uniao,aldemir,garcia,babolin
+2026-11-14 15:42:35,119 | INFO | Início da fonte: portaldacidade
+2026-11-14 15:42:35,262 | INFO | robots.txt consultado | https://umuarama.portaldacidade.com | crawl-delay=None
+2026-11-14 15:42:35,262 | WARNING | URL não autorizada pelo robots.txt: https://umuarama.portaldacidade.com/imoveis/casas-para-alugar-em-umuarama
+2026-11-14 15:42:35,262 | INFO | [portaldacidade] anúncios na listagem: 0
+2026-11-14 15:42:35,262 | INFO | Fim da fonte portaldacidade | válidos=0 | rejeitados=0 | motivos={}
+2026-11-14 15:42:35,263 | INFO | Início da fonte: uniao
+2026-11-14 15:42:35,351 | INFO | robots.txt consultado | https://www.imobiliariauniaoumuarama.com | crawl-delay=None
+2026-11-14 15:42:35,351 | INFO | GET https://www.imobiliariauniaoumuarama.com/buscar?availability=rent&search_type=properties_map (tentativa 1/3)
+2026-11-14 15:42:37,685 | INFO | Fim da fonte uniao | válidos=1 | rejeitados=0 | motivos={}
+2026-11-14 15:42:37,685 | INFO | Início da fonte: aldemir
+2026-11-14 15:42:38,156 | INFO | robots.txt consultado | https://www.aldemirimoveis.com.br | crawl-delay=10
+2026-11-14 15:42:38,157 | INFO | GET https://www.aldemirimoveis.com.br/imoveis-para-alugar (tentativa 1/3)
+2026-11-14 15:42:40,882 | INFO | [aldemir] links de casas: 2
+2026-11-14 15:42:50,811 | INFO | GET https://www.aldemirimoveis.com.br/conheca-o-imovel/1400/casas/jardim+dos+principes/umuarama-pr/proximo+a+igreja+betel+e+roma%27s+hotel (tentativa 1/3)
+2026-11-14 15:43:01,654 | INFO | GET https://www.aldemirimoveis.com.br/conheca-o-imovel/1662/casas/jardim+san+martim/umuarama-pr/proxima+ao+lago+tucuruvi (tentativa 1/3)
+2026-11-14 15:43:02,530 | INFO | Fim da fonte aldemir | válidos=2 | rejeitados=0 | motivos={}
+2026-11-14 15:43:02,531 | INFO | Início da fonte: garcia
+2026-11-14 15:43:02,980 | INFO | robots.txt consultado | https://garciaimoveis.com | crawl-delay=10
+2026-11-14 15:43:02,980 | INFO | GET https://garciaimoveis.com/imoveis-para-alugar (tentativa 1/3)
+2026-11-14 15:43:09,499 | INFO | [garcia] links de casas: 1
+2026-11-14 15:43:19,434 | INFO | GET https://garciaimoveis.com/conheca-o-imovel/4992/casas/zona+ii/umuarama-pr/avenida+sao+paulo+5321 (tentativa 1/3)
+2026-11-14 15:43:20,898 | INFO | Fim da fonte garcia | válidos=1 | rejeitados=0 | motivos={}
+2026-11-14 15:43:20,898 | INFO | Início da fonte: babolin
+2026-11-14 15:43:21,365 | INFO | robots.txt consultado | https://imobiliariababolim.com.br | crawl-delay=None
+2026-11-14 15:43:21,365 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama (tentativa 1/3)
+2026-11-14 15:43:22,035 | INFO | [babolin] links de casas: 2
+2026-11-14 15:43:23,967 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama/jardim-araucaria/casa/13728692/ (tentativa 1/3)
+2026-11-14 15:43:26,270 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama/paysage-essenza-condominio/casa/13079639/ (tentativa 1/3)
+2026-11-14 15:43:26,887 | INFO | Fim da fonte babolin | válidos=2 | rejeitados=0 | motivos={}
+2026-11-14 15:43:26,896 | INFO | Fim da coleta | visitados=9 | válidos=6 | rejeitados=0 | duplicatas=0 | erros=0 | duração=51.8s | saída=C:\Users\User\proj_imibiliario\data\raw\coletadas.csv
+2026-11-14 15:45:25,580 | INFO | Início da coleta | início=2026-11-14T15:45:25.578997-03:00 | cidade=Umuarama | fontes=deztop,portaldacidade,uniao,aldemir,garcia,babolin
+2026-11-14 15:45:25,580 | INFO | Início da fonte: deztop
+2026-11-14 15:45:25,792 | INFO | robots.txt consultado | https://deztop.com | regras=5 | crawl-delay=None
+2026-11-14 15:45:25,793 | INFO | GET https://deztop.com/br/imoveis/pr/umuarama/aluguel/casa (tentativa 1/3)
+2026-11-14 15:45:28,113 | INFO | GET https://deztop.com/br/imoveis/pr/umuarama/aluguel/casa?page=2 (tentativa 1/3)
+2026-11-14 15:45:30,407 | INFO | GET https://deztop.com/br/imoveis/pr/umuarama/aluguel/casa?page=3 (tentativa 1/3)
+2026-11-14 15:45:30,853 | INFO | [deztop] links de casas: 62
+2026-11-14 15:45:32,865 | INFO | GET https://deztop.com/br/imovel/309063259/casa-3-quartos-paysage-essenza-condominio-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:35,160 | INFO | GET https://deztop.com/br/imovel/312890109/casa-5-quartos-zona-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:35,465 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312890109/casa-5-quartos-zona-ii-umuarama-pr-imovel-mobiliado | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:45:37,470 | INFO | GET https://deztop.com/br/imovel/312888706/casa-3-quartos-zona-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:37,760 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312888706/casa-3-quartos-zona-ii-umuarama-pr-imovel-mobiliado | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:45:39,758 | INFO | GET https://deztop.com/br/imovel/309064247/casa-4-quartos-paysage-essenza-condominio-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:42,293 | INFO | GET https://deztop.com/br/imovel/312479692/casa-5-quartos-jardim-imigrantes-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:44,595 | INFO | GET https://deztop.com/br/imovel/312518771/casa-4-quartos-parque-vitoria-regia-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:46,884 | INFO | GET https://deztop.com/br/imovel/312479848/casa-7-quartos-jardim-imigrantes-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:49,184 | INFO | GET https://deztop.com/br/imovel/312519160/casa-6-quartos-parque-vitoria-regia-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:45:51,482 | INFO | GET https://deztop.com/br/imovel/310355305/casa-4-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:45:53,773 | INFO | GET https://deztop.com/br/imovel/311717806/casa-4-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:45:56,073 | INFO | GET https://deztop.com/br/imovel/312415134/casa-3-quartos-zona-i-umuarama-pr-varanda (tentativa 1/3)
+2026-11-14 15:45:58,368 | INFO | GET https://deztop.com/br/imovel/310355506/casa-7-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:46:00,663 | INFO | GET https://deztop.com/br/imovel/312464988/casa-6-quartos-zona-i-umuarama-pr-varanda (tentativa 1/3)
+2026-11-14 15:46:02,961 | INFO | GET https://deztop.com/br/imovel/311718028/casa-7-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:46:05,254 | INFO | GET https://deztop.com/br/imovel/296225884/casa-4-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:07,556 | INFO | GET https://deztop.com/br/imovel/293960688/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:09,856 | INFO | GET https://deztop.com/br/imovel/294807398/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:10,141 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/294807398/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:46:12,154 | INFO | GET https://deztop.com/br/imovel/300173974/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:14,453 | INFO | GET https://deztop.com/br/imovel/292920294/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:16,750 | INFO | GET https://deztop.com/br/imovel/291741651/casa-3-dormitorios-umuarama-condominio-residencial-ecoville (tentativa 1/3)
+2026-11-14 15:46:19,044 | INFO | GET https://deztop.com/br/imovel/298027556/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:21,337 | INFO | GET https://deztop.com/br/imovel/303558858/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:23,634 | INFO | GET https://deztop.com/br/imovel/293884078/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:25,928 | INFO | GET https://deztop.com/br/imovel/297651229/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:28,223 | INFO | GET https://deztop.com/br/imovel/309636604/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:30,522 | INFO | GET https://deztop.com/br/imovel/291215298/casa-2-dormitorios-umuarama-condominio-residencial-belo-monte (tentativa 1/3)
+2026-11-14 15:46:32,801 | INFO | GET https://deztop.com/br/imovel/294718633/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:35,094 | INFO | GET https://deztop.com/br/imovel/267440883/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:37,381 | INFO | GET https://deztop.com/br/imovel/300933595/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:39,669 | INFO | GET https://deztop.com/br/imovel/297174972/casa-1-dormitorio-umuarama (tentativa 1/3)
+2026-11-14 15:46:41,959 | INFO | GET https://deztop.com/br/imovel/303250042/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:44,273 | INFO | GET https://deztop.com/br/imovel/303049328/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:46,560 | INFO | GET https://deztop.com/br/imovel/273457174/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:46,873 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/273457174/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:46:48,886 | INFO | GET https://deztop.com/br/imovel/298199930/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:51,182 | INFO | GET https://deztop.com/br/imovel/302445332/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:53,473 | INFO | GET https://deztop.com/br/imovel/290563512/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:53,786 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/290563512/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:46:55,799 | INFO | GET https://deztop.com/br/imovel/250620463/casa-4-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:46:58,123 | INFO | GET https://deztop.com/br/imovel/302831335/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:00,421 | INFO | GET https://deztop.com/br/imovel/294049106/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:02,707 | INFO | GET https://deztop.com/br/imovel/301813605/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:05,004 | INFO | GET https://deztop.com/br/imovel/301039340/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:07,320 | INFO | GET https://deztop.com/br/imovel/275254206/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:07,624 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/275254206/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:09,626 | INFO | GET https://deztop.com/br/imovel/303684764/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:11,927 | INFO | GET https://deztop.com/br/imovel/269165201/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:12,246 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/269165201/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:14,258 | INFO | GET https://deztop.com/br/imovel/291103871/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:14,541 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/291103871/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:16,548 | INFO | GET https://deztop.com/br/imovel/278358265/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:16,833 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/278358265/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:18,844 | INFO | GET https://deztop.com/br/imovel/302227770/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:21,145 | INFO | GET https://deztop.com/br/imovel/312729332/casa-3-quartos-parque-cidade-jardim-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:47:21,441 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729332/casa-3-quartos-parque-cidade-jardim-umuarama-pr-churrasqueira | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:23,447 | INFO | GET https://deztop.com/br/imovel/302418703/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:23,728 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/302418703/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:25,732 | INFO | GET https://deztop.com/br/imovel/278386012/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:26,018 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/278386012/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:28,031 | INFO | GET https://deztop.com/br/imovel/312729330/casa-3-quartos-zona-iii-umuarama-pr (tentativa 1/3)
+2026-11-14 15:47:28,329 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729330/casa-3-quartos-zona-iii-umuarama-pr | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:30,344 | INFO | GET https://deztop.com/br/imovel/287127585/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:30,630 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/287127585/casa-2-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:32,635 | INFO | GET https://deztop.com/br/imovel/312729338/casa-3-quartos-parque-bandeirantes-umuarama-pr (tentativa 1/3)
+2026-11-14 15:47:32,921 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729338/casa-3-quartos-parque-bandeirantes-umuarama-pr | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:34,934 | INFO | GET https://deztop.com/br/imovel/301786669/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:35,250 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/301786669/casa-3-dormitorios-umuarama | motivo=aluguel ausente ou fora do intervalo R$ 300–R$ 25000
+2026-11-14 15:47:37,260 | INFO | GET https://deztop.com/br/imovel/301447702/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:39,581 | INFO | GET https://deztop.com/br/imovel/295195234/casa-1-dormitorio-umuarama (tentativa 1/3)
+2026-11-14 15:47:41,897 | INFO | GET https://deztop.com/br/imovel/312926169/casa-3-quartos-parque-residencial-interlagos-umuarama-pr (tentativa 1/3)
+2026-11-14 15:47:44,187 | INFO | GET https://deztop.com/br/imovel/312729359/casa-3-quartos-umuarama-pr-piscina (tentativa 1/3)
+2026-11-14 15:47:44,473 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729359/casa-3-quartos-umuarama-pr-piscina | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:46,488 | INFO | GET https://deztop.com/br/imovel/299467363/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:48,784 | INFO | GET https://deztop.com/br/imovel/290930177/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:51,068 | INFO | GET https://deztop.com/br/imovel/274379687/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:47:51,357 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/274379687/casa-3-dormitorios-umuarama | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:53,360 | INFO | GET https://deztop.com/br/imovel/312729341/casa-3-quartos-zona-iii-umuarama-pr (tentativa 1/3)
+2026-11-14 15:47:56,201 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729341/casa-3-quartos-zona-iii-umuarama-pr | motivo=breadcrumb não indica aluguel em Umuarama
+2026-11-14 15:47:56,201 | INFO | Fim da fonte deztop | válidos=43 | rejeitados=19 | motivos={'breadcrumb não indica aluguel em Umuarama': 18, 'aluguel ausente ou fora do intervalo R$ 300–R$ 25000': 1}
+2026-11-14 15:47:56,203 | INFO | Início da fonte: portaldacidade
+2026-11-14 15:47:56,296 | INFO | robots.txt consultado | https://umuarama.portaldacidade.com | regras=17 | crawl-delay=None
+2026-11-14 15:47:56,298 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casas-para-alugar-em-umuarama (tentativa 1/3)
+2026-11-14 15:47:56,359 | INFO | [portaldacidade] anúncios na listagem: 30
+2026-11-14 15:47:58,347 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-100m-umuarama-pr-81464 (tentativa 1/3)
+2026-11-14 15:48:00,395 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-135m-umuarama-pr-81461 (tentativa 1/3)
+2026-11-14 15:48:02,440 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81457 (tentativa 1/3)
+2026-11-14 15:48:04,484 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81453 (tentativa 1/3)
+2026-11-14 15:48:06,531 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-140m-umuarama-pr-81434 (tentativa 1/3)
+2026-11-14 15:48:08,573 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81430 (tentativa 1/3)
+2026-11-14 15:48:10,624 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81428 (tentativa 1/3)
+2026-11-14 15:48:12,669 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-380m-umuarama-pr-81425 (tentativa 1/3)
+2026-11-14 15:48:14,718 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81424 (tentativa 1/3)
+2026-11-14 15:48:16,764 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-60m-umuarama-pr-81423 (tentativa 1/3)
+2026-11-14 15:48:18,826 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-195m-umuarama-pr-81420 (tentativa 1/3)
+2026-11-14 15:48:20,872 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-85m-umuarama-pr-81419 (tentativa 1/3)
+2026-11-14 15:48:22,928 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81402 (tentativa 1/3)
+2026-11-14 15:48:24,970 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81401 (tentativa 1/3)
+2026-11-14 15:48:27,007 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-75m-umuarama-pr-81396 (tentativa 1/3)
+2026-11-14 15:48:29,053 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81392 (tentativa 1/3)
+2026-11-14 15:48:31,097 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81383 (tentativa 1/3)
+2026-11-14 15:48:33,160 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-222m-umuarama-pr-81371 (tentativa 1/3)
+2026-11-14 15:48:35,216 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81363 (tentativa 1/3)
+2026-11-14 15:48:37,273 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-245m-umuarama-pr-81337 (tentativa 1/3)
+2026-11-14 15:48:39,327 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-296m-umuarama-pr-81308 (tentativa 1/3)
+2026-11-14 15:48:41,360 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81298 (tentativa 1/3)
+2026-11-14 15:48:43,404 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81289 (tentativa 1/3)
+2026-11-14 15:48:45,449 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81277 (tentativa 1/3)
+2026-11-14 15:48:47,498 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-59m-umuarama-pr-81270 (tentativa 1/3)
+2026-11-14 15:48:49,539 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-65m-umuarama-pr-81245 (tentativa 1/3)
+2026-11-14 15:48:51,599 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-130m-umuarama-pr-81232 (tentativa 1/3)
+2026-11-14 15:48:53,651 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81213 (tentativa 1/3)
+2026-11-14 15:48:55,706 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-54m-umuarama-pr-81191 (tentativa 1/3)
+2026-11-14 15:48:57,739 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-350m-umuarama-pr-81188 (tentativa 1/3)
+2026-11-14 15:48:57,789 | INFO | Fim da fonte portaldacidade | válidos=30 | rejeitados=0 | motivos={}
+2026-11-14 15:48:57,789 | INFO | Início da fonte: uniao
+2026-11-14 15:48:58,279 | INFO | robots.txt consultado | https://www.imobiliariauniaoumuarama.com | regras=2 | crawl-delay=None
+2026-11-14 15:48:58,279 | INFO | GET https://www.imobiliariauniaoumuarama.com/buscar?availability=rent&search_type=properties_map (tentativa 1/3)
+2026-11-14 15:49:00,585 | INFO | Fim da fonte uniao | válidos=1 | rejeitados=0 | motivos={}
+2026-11-14 15:49:00,586 | INFO | Início da fonte: aldemir
+2026-11-14 15:49:01,056 | INFO | robots.txt consultado | https://www.aldemirimoveis.com.br | regras=8 | crawl-delay=10.0
+2026-11-14 15:49:01,057 | INFO | GET https://www.aldemirimoveis.com.br/imoveis-para-alugar (tentativa 1/3)
+2026-11-14 15:49:03,364 | INFO | [aldemir] links de casas: 2
+2026-11-14 15:49:13,271 | INFO | GET https://www.aldemirimoveis.com.br/conheca-o-imovel/1400/casas/jardim+dos+principes/umuarama-pr/proximo+a+igreja+betel+e+roma%27s+hotel (tentativa 1/3)
+2026-11-14 15:49:24,122 | INFO | GET https://www.aldemirimoveis.com.br/conheca-o-imovel/1662/casas/jardim+san+martim/umuarama-pr/proxima+ao+lago+tucuruvi (tentativa 1/3)
+2026-11-14 15:49:25,004 | INFO | Fim da fonte aldemir | válidos=2 | rejeitados=0 | motivos={}
+2026-11-14 15:49:25,005 | INFO | Início da fonte: garcia
+2026-11-14 15:49:25,463 | INFO | robots.txt consultado | https://garciaimoveis.com | regras=8 | crawl-delay=10.0
+2026-11-14 15:49:25,464 | INFO | GET https://garciaimoveis.com/imoveis-para-alugar (tentativa 1/3)
+2026-11-14 15:49:31,621 | INFO | [garcia] links de casas: 1
+2026-11-14 15:49:41,573 | INFO | GET https://garciaimoveis.com/conheca-o-imovel/4992/casas/zona+ii/umuarama-pr/avenida+sao+paulo+5321 (tentativa 1/3)
+2026-11-14 15:49:43,058 | INFO | Fim da fonte garcia | válidos=1 | rejeitados=0 | motivos={}
+2026-11-14 15:49:43,058 | INFO | Início da fonte: babolin
+2026-11-14 15:49:43,523 | INFO | robots.txt consultado | https://imobiliariababolim.com.br | regras=1 | crawl-delay=None
+2026-11-14 15:49:43,523 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama (tentativa 1/3)
+2026-11-14 15:49:43,903 | INFO | [babolin] links de casas: 2
+2026-11-14 15:49:45,814 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama/jardim-araucaria/casa/13728692/ (tentativa 1/3)
+2026-11-14 15:49:48,117 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama/paysage-essenza-condominio/casa/13079639/ (tentativa 1/3)
+2026-11-14 15:49:48,576 | INFO | Fim da fonte babolin | válidos=2 | rejeitados=0 | motivos={}
+2026-11-14 15:49:48,577 | WARNING | Duplicata descartada: deztop_312479692 (https://deztop.com/br/imovel/312479692/casa-5-quartos-jardim-imigrantes-ii-umuarama-pr-imovel-mobiliado)
+2026-11-14 15:49:48,579 | WARNING | Duplicata descartada: babolin_13079639 (https://imobiliariababolim.com.br/alugar/pr/umuarama/paysage-essenza-condominio/casa/13079639/)
+2026-11-14 15:49:48,583 | INFO | Fim da coleta | visitados=105 | válidos=77 | rejeitados=19 | duplicatas=2 | erros=0 | duração=263.0s | saída=C:\Users\User\proj_imibiliario\data\raw\coletadas.csv
+2026-11-14 15:51:40,475 | INFO | Início da coleta | início=2026-11-14T15:51:40.473770-03:00 | cidade=Umuarama | fontes=deztop,portaldacidade,uniao,aldemir,garcia,babolin
+2026-11-14 15:51:40,475 | INFO | Início da fonte: deztop
+2026-11-14 15:51:41,004 | INFO | robots.txt consultado | https://deztop.com | regras=5 | crawl-delay=None
+2026-11-14 15:51:41,004 | INFO | GET https://deztop.com/br/imoveis/pr/umuarama/aluguel/casa (tentativa 1/3)
+2026-11-14 15:51:43,300 | INFO | GET https://deztop.com/br/imoveis/pr/umuarama/aluguel/casa?page=2 (tentativa 1/3)
+2026-11-14 15:51:45,577 | INFO | GET https://deztop.com/br/imoveis/pr/umuarama/aluguel/casa?page=3 (tentativa 1/3)
+2026-11-14 15:51:46,034 | INFO | [deztop] links de casas: 62
+2026-11-14 15:51:48,039 | INFO | GET https://deztop.com/br/imovel/309063259/casa-3-quartos-paysage-essenza-condominio-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:51:50,300 | INFO | GET https://deztop.com/br/imovel/312890109/casa-5-quartos-zona-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:51:50,585 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312890109/casa-5-quartos-zona-ii-umuarama-pr-imovel-mobiliado | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:51:52,594 | INFO | GET https://deztop.com/br/imovel/312888706/casa-3-quartos-zona-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:51:52,861 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312888706/casa-3-quartos-zona-ii-umuarama-pr-imovel-mobiliado | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:51:54,864 | INFO | GET https://deztop.com/br/imovel/309064247/casa-4-quartos-paysage-essenza-condominio-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:51:57,165 | INFO | GET https://deztop.com/br/imovel/312479692/casa-5-quartos-jardim-imigrantes-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:51:59,442 | INFO | GET https://deztop.com/br/imovel/312518771/casa-4-quartos-parque-vitoria-regia-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:52:01,741 | INFO | GET https://deztop.com/br/imovel/312479848/casa-7-quartos-jardim-imigrantes-ii-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:52:04,038 | INFO | GET https://deztop.com/br/imovel/312519160/casa-6-quartos-parque-vitoria-regia-umuarama-pr-imovel-mobiliado (tentativa 1/3)
+2026-11-14 15:52:06,318 | INFO | GET https://deztop.com/br/imovel/310355305/casa-4-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:52:08,585 | INFO | GET https://deztop.com/br/imovel/311717806/casa-4-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:52:10,850 | INFO | GET https://deztop.com/br/imovel/312415134/casa-3-quartos-zona-i-umuarama-pr-varanda (tentativa 1/3)
+2026-11-14 15:52:13,145 | INFO | GET https://deztop.com/br/imovel/310355506/casa-7-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:52:15,413 | INFO | GET https://deztop.com/br/imovel/312464988/casa-6-quartos-zona-i-umuarama-pr-varanda (tentativa 1/3)
+2026-11-14 15:52:17,705 | INFO | GET https://deztop.com/br/imovel/311718028/casa-7-quartos-zona-i-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:52:19,971 | INFO | GET https://deztop.com/br/imovel/296225884/casa-4-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:22,252 | INFO | GET https://deztop.com/br/imovel/293960688/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:24,545 | INFO | GET https://deztop.com/br/imovel/294807398/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:24,811 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/294807398/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:52:26,823 | INFO | GET https://deztop.com/br/imovel/300173974/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:29,112 | INFO | GET https://deztop.com/br/imovel/292920294/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:31,391 | INFO | GET https://deztop.com/br/imovel/291741651/casa-3-dormitorios-umuarama-condominio-residencial-ecoville (tentativa 1/3)
+2026-11-14 15:52:33,682 | INFO | GET https://deztop.com/br/imovel/298027556/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:35,951 | INFO | GET https://deztop.com/br/imovel/303558858/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:38,221 | INFO | GET https://deztop.com/br/imovel/293884078/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:40,491 | INFO | GET https://deztop.com/br/imovel/297651229/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:42,781 | INFO | GET https://deztop.com/br/imovel/309636604/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:45,056 | INFO | GET https://deztop.com/br/imovel/291215298/casa-2-dormitorios-umuarama-condominio-residencial-belo-monte (tentativa 1/3)
+2026-11-14 15:52:47,330 | INFO | GET https://deztop.com/br/imovel/294718633/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:49,611 | INFO | GET https://deztop.com/br/imovel/267440883/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:51,887 | INFO | GET https://deztop.com/br/imovel/300933595/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:54,180 | INFO | GET https://deztop.com/br/imovel/297174972/casa-1-dormitorio-umuarama (tentativa 1/3)
+2026-11-14 15:52:56,466 | INFO | GET https://deztop.com/br/imovel/303250042/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:52:58,763 | INFO | GET https://deztop.com/br/imovel/303049328/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:01,045 | INFO | GET https://deztop.com/br/imovel/273457174/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:01,312 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/273457174/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:03,319 | INFO | GET https://deztop.com/br/imovel/298199930/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:05,609 | INFO | GET https://deztop.com/br/imovel/302445332/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:07,882 | INFO | GET https://deztop.com/br/imovel/290563512/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:08,172 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/290563512/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:10,186 | INFO | GET https://deztop.com/br/imovel/250620463/casa-4-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:12,474 | INFO | GET https://deztop.com/br/imovel/302831335/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:14,770 | INFO | GET https://deztop.com/br/imovel/294049106/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:17,066 | INFO | GET https://deztop.com/br/imovel/301813605/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:19,339 | INFO | GET https://deztop.com/br/imovel/301039340/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:21,623 | INFO | GET https://deztop.com/br/imovel/275254206/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:21,893 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/275254206/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:23,908 | INFO | GET https://deztop.com/br/imovel/303684764/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:26,198 | INFO | GET https://deztop.com/br/imovel/269165201/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:26,464 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/269165201/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:28,461 | INFO | GET https://deztop.com/br/imovel/291103871/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:28,745 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/291103871/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:30,738 | INFO | GET https://deztop.com/br/imovel/278358265/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:31,025 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/278358265/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:33,037 | INFO | GET https://deztop.com/br/imovel/302227770/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:35,329 | INFO | GET https://deztop.com/br/imovel/312729332/casa-3-quartos-parque-cidade-jardim-umuarama-pr-churrasqueira (tentativa 1/3)
+2026-11-14 15:53:35,595 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729332/casa-3-quartos-parque-cidade-jardim-umuarama-pr-churrasqueira | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:37,609 | INFO | GET https://deztop.com/br/imovel/302418703/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:37,890 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/302418703/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:39,902 | INFO | GET https://deztop.com/br/imovel/278386012/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:40,239 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/278386012/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:42,250 | INFO | GET https://deztop.com/br/imovel/312729330/casa-3-quartos-zona-iii-umuarama-pr (tentativa 1/3)
+2026-11-14 15:53:42,534 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729330/casa-3-quartos-zona-iii-umuarama-pr | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:44,546 | INFO | GET https://deztop.com/br/imovel/287127585/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:44,809 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/287127585/casa-2-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:46,819 | INFO | GET https://deztop.com/br/imovel/312729338/casa-3-quartos-parque-bandeirantes-umuarama-pr (tentativa 1/3)
+2026-11-14 15:53:47,085 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729338/casa-3-quartos-parque-bandeirantes-umuarama-pr | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:53:49,091 | INFO | GET https://deztop.com/br/imovel/301786669/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:49,356 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/301786669/casa-3-dormitorios-umuarama | motivo=aluguel ausente ou fora do intervalo R$ 300–R$ 25000
+2026-11-14 15:53:51,361 | INFO | GET https://deztop.com/br/imovel/301447702/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:53:53,654 | INFO | GET https://deztop.com/br/imovel/295195234/casa-1-dormitorio-umuarama (tentativa 1/3)
+2026-11-14 15:53:55,949 | INFO | GET https://deztop.com/br/imovel/312926169/casa-3-quartos-parque-residencial-interlagos-umuarama-pr (tentativa 1/3)
+2026-11-14 15:53:58,218 | INFO | GET https://deztop.com/br/imovel/312729359/casa-3-quartos-umuarama-pr-piscina (tentativa 1/3)
+2026-11-14 15:53:58,498 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729359/casa-3-quartos-umuarama-pr-piscina | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:54:00,506 | INFO | GET https://deztop.com/br/imovel/299467363/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:54:02,798 | INFO | GET https://deztop.com/br/imovel/290930177/casa-2-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:54:05,114 | INFO | GET https://deztop.com/br/imovel/274379687/casa-3-dormitorios-umuarama (tentativa 1/3)
+2026-11-14 15:54:05,396 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/274379687/casa-3-dormitorios-umuarama | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:54:07,411 | INFO | GET https://deztop.com/br/imovel/312729341/casa-3-quartos-zona-iii-umuarama-pr (tentativa 1/3)
+2026-11-14 15:54:07,679 | WARNING | Anúncio rejeitado | URL=https://deztop.com/br/imovel/312729341/casa-3-quartos-zona-iii-umuarama-pr | motivo=não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)
+2026-11-14 15:54:07,679 | INFO | Fim da fonte deztop | válidos=43 | rejeitados=19 | motivos={'não é aluguel em Umuarama (breadcrumb indica venda ou outra cidade)': 18, 'aluguel ausente ou fora do intervalo R$ 300–R$ 25000': 1}
+2026-11-14 15:54:07,679 | INFO | Início da fonte: portaldacidade
+2026-11-14 15:54:07,765 | INFO | robots.txt consultado | https://umuarama.portaldacidade.com | regras=17 | crawl-delay=None
+2026-11-14 15:54:07,767 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casas-para-alugar-em-umuarama (tentativa 1/3)
+2026-11-14 15:54:07,818 | INFO | [portaldacidade] anúncios na listagem: 30
+2026-11-14 15:54:09,817 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-100m-umuarama-pr-81464 (tentativa 1/3)
+2026-11-14 15:54:11,873 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-135m-umuarama-pr-81461 (tentativa 1/3)
+2026-11-14 15:54:13,913 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81457 (tentativa 1/3)
+2026-11-14 15:54:15,948 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81453 (tentativa 1/3)
+2026-11-14 15:54:18,003 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-140m-umuarama-pr-81434 (tentativa 1/3)
+2026-11-14 15:54:20,039 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81430 (tentativa 1/3)
+2026-11-14 15:54:22,094 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81428 (tentativa 1/3)
+2026-11-14 15:54:24,150 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-380m-umuarama-pr-81425 (tentativa 1/3)
+2026-11-14 15:54:26,206 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81424 (tentativa 1/3)
+2026-11-14 15:54:28,234 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-60m-umuarama-pr-81423 (tentativa 1/3)
+2026-11-14 15:54:30,284 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-195m-umuarama-pr-81420 (tentativa 1/3)
+2026-11-14 15:54:32,334 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-85m-umuarama-pr-81419 (tentativa 1/3)
+2026-11-14 15:54:34,371 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81402 (tentativa 1/3)
+2026-11-14 15:54:36,421 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81401 (tentativa 1/3)
+2026-11-14 15:54:38,464 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-75m-umuarama-pr-81396 (tentativa 1/3)
+2026-11-14 15:54:40,515 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81392 (tentativa 1/3)
+2026-11-14 15:54:42,557 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81383 (tentativa 1/3)
+2026-11-14 15:54:44,606 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-222m-umuarama-pr-81371 (tentativa 1/3)
+2026-11-14 15:54:46,642 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81363 (tentativa 1/3)
+2026-11-14 15:54:48,685 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-245m-umuarama-pr-81337 (tentativa 1/3)
+2026-11-14 15:54:50,717 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-296m-umuarama-pr-81308 (tentativa 1/3)
+2026-11-14 15:54:52,764 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81298 (tentativa 1/3)
+2026-11-14 15:54:54,806 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81289 (tentativa 1/3)
+2026-11-14 15:54:56,857 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81277 (tentativa 1/3)
+2026-11-14 15:54:58,925 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-59m-umuarama-pr-81270 (tentativa 1/3)
+2026-11-14 15:55:00,967 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-65m-umuarama-pr-81245 (tentativa 1/3)
+2026-11-14 15:55:03,016 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-130m-umuarama-pr-81232 (tentativa 1/3)
+2026-11-14 15:55:05,075 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81213 (tentativa 1/3)
+2026-11-14 15:55:07,126 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-54m-umuarama-pr-81191 (tentativa 1/3)
+2026-11-14 15:55:09,180 | INFO | GET https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-350m-umuarama-pr-81188 (tentativa 1/3)
+2026-11-14 15:55:09,246 | INFO | Fim da fonte portaldacidade | válidos=30 | rejeitados=0 | motivos={}
+2026-11-14 15:55:09,246 | INFO | Início da fonte: uniao
+2026-11-14 15:55:09,331 | INFO | robots.txt consultado | https://www.imobiliariauniaoumuarama.com | regras=2 | crawl-delay=None
+2026-11-14 15:55:09,332 | INFO | GET https://www.imobiliariauniaoumuarama.com/buscar?availability=rent&search_type=properties_map (tentativa 1/3)
+2026-11-14 15:55:10,103 | INFO | Fim da fonte uniao | válidos=1 | rejeitados=0 | motivos={}
+2026-11-14 15:55:10,103 | INFO | Início da fonte: aldemir
+2026-11-14 15:55:10,574 | INFO | robots.txt consultado | https://www.aldemirimoveis.com.br | regras=8 | crawl-delay=10.0
+2026-11-14 15:55:10,575 | INFO | GET https://www.aldemirimoveis.com.br/imoveis-para-alugar (tentativa 1/3)
+2026-11-14 15:55:12,965 | INFO | [aldemir] links de casas: 2
+2026-11-14 15:55:22,821 | INFO | GET https://www.aldemirimoveis.com.br/conheca-o-imovel/1400/casas/jardim+dos+principes/umuarama-pr/proximo+a+igreja+betel+e+roma%27s+hotel (tentativa 1/3)
+2026-11-14 15:55:33,664 | INFO | GET https://www.aldemirimoveis.com.br/conheca-o-imovel/1662/casas/jardim+san+martim/umuarama-pr/proxima+ao+lago+tucuruvi (tentativa 1/3)
+2026-11-14 15:55:34,652 | INFO | Fim da fonte aldemir | válidos=2 | rejeitados=0 | motivos={}
+2026-11-14 15:55:34,653 | INFO | Início da fonte: garcia
+2026-11-14 15:55:35,139 | INFO | robots.txt consultado | https://garciaimoveis.com | regras=8 | crawl-delay=10.0
+2026-11-14 15:55:35,140 | INFO | GET https://garciaimoveis.com/imoveis-para-alugar (tentativa 1/3)
+2026-11-14 15:55:41,374 | INFO | [garcia] links de casas: 1
+2026-11-14 15:55:51,283 | INFO | GET https://garciaimoveis.com/conheca-o-imovel/4992/casas/zona+ii/umuarama-pr/avenida+sao+paulo+5321 (tentativa 1/3)
+2026-11-14 15:55:52,779 | INFO | Fim da fonte garcia | válidos=1 | rejeitados=0 | motivos={}
+2026-11-14 15:55:52,779 | INFO | Início da fonte: babolin
+2026-11-14 15:55:53,245 | INFO | robots.txt consultado | https://imobiliariababolim.com.br | regras=1 | crawl-delay=None
+2026-11-14 15:55:53,246 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama (tentativa 1/3)
+2026-11-14 15:55:53,714 | INFO | [babolin] links de casas: 2
+2026-11-14 15:55:55,574 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama/jardim-araucaria/casa/13728692/ (tentativa 1/3)
+2026-11-14 15:55:58,933 | INFO | GET https://imobiliariababolim.com.br/alugar/pr/umuarama/paysage-essenza-condominio/casa/13079639/ (tentativa 1/3)
+2026-11-14 15:55:59,678 | INFO | Fim da fonte babolin | válidos=2 | rejeitados=0 | motivos={}
+2026-11-14 15:55:59,679 | WARNING | Duplicata descartada: deztop_312479692 (https://deztop.com/br/imovel/312479692/casa-5-quartos-jardim-imigrantes-ii-umuarama-pr-imovel-mobiliado)
+2026-11-14 15:55:59,680 | WARNING | Duplicata descartada: portal_81425 (https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-380m-umuarama-pr-81425)
+2026-11-14 15:55:59,681 | WARNING | Duplicata descartada: portal_81383 (https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81383)
+2026-11-14 15:55:59,681 | WARNING | Duplicata descartada: portal_81289 (https://umuarama.portaldacidade.com/imoveis/casa-para-alugar/casa-0m-umuarama-pr-81289)
+2026-11-14 15:55:59,681 | WARNING | Duplicata descartada: aldemir_1662 (https://www.aldemirimoveis.com.br/conheca-o-imovel/1662/casas/jardim+san+martim/umuarama-pr/proxima+ao+lago+tucuruvi)
+2026-11-14 15:55:59,682 | WARNING | Duplicata descartada: babolin_13079639 (https://imobiliariababolim.com.br/alugar/pr/umuarama/paysage-essenza-condominio/casa/13079639/)
+2026-11-14 15:55:59,686 | INFO | Fim da coleta | visitados=105 | válidos=73 | rejeitados=19 | duplicatas=6 | erros=0 | duração=259.2s | saída=C:\Users\User\proj_imibiliario\data\raw\coletadas.csv

@@ -1,0 +1,238 @@
+{
+  "modelo_selecionado": "Random Forest",
+  "criterio": "menor MAE médio na validação cruzada 5x5",
+  "cv_media": {
+    "Baseline: média": {
+      "MAE": 1621.4793,
+      "RMSE": 2120.4155,
+      "R2": -0.1568,
+      "MAPE": 0.7056
+    },
+    "Regressão linear (Ridge)": {
+      "MAE": 1267.0121,
+      "RMSE": 2042.9948,
+      "R2": -0.3397,
+      "MAPE": 0.4645
+    },
+    "KNN Regressor (k=7)": {
+      "MAE": 1326.6919,
+      "RMSE": 1871.3735,
+      "R2": 0.0937,
+      "MAPE": 0.5096
+    },
+    "Árvore de regressão": {
+      "MAE": 1259.7328,
+      "RMSE": 1799.6638,
+      "R2": 0.1252,
+      "MAPE": 0.5217
+    },
+    "SVR (RBF)": {
+      "MAE": 1269.313,
+      "RMSE": 1753.7047,
+      "R2": 0.1702,
+      "MAPE": 0.5244
+    },
+    "Random Forest": {
+      "MAE": 1150.5885,
+      "RMSE": 1669.5483,
+      "R2": 0.2602,
+      "MAPE": 0.454
+    }
+  },
+  "cv_desvio": {
+    "Baseline: média": {
+      "MAE": 362.8539,
+      "RMSE": 439.41,
+      "R2": 0.2188,
+      "MAPE": 0.1018
+    },
+    "Regressão linear (Ridge)": {
+      "MAE": 374.8447,
+      "RMSE": 814.6185,
+      "R2": 1.3371,
+      "MAPE": 0.1115
+    },
+    "KNN Regressor (k=7)": {
+      "MAE": 337.3762,
+      "RMSE": 438.5904,
+      "R2": 0.248,
+      "MAPE": 0.0896
+    },
+    "Árvore de regressão": {
+      "MAE": 300.757,
+      "RMSE": 407.5334,
+      "R2": 0.3478,
+      "MAPE": 0.1413
+    },
+    "SVR (RBF)": {
+      "MAE": 238.6415,
+      "RMSE": 274.559,
+      "R2": 0.2463,
+      "MAPE": 0.1428
+    },
+    "Random Forest": {
+      "MAE": 318.0834,
+      "RMSE": 421.5715,
+      "R2": 0.2726,
+      "MAPE": 0.1058
+    }
+  },
+  "teste": {
+    "Baseline: média": {
+      "MAE": 1441.4129,
+      "RMSE": 2246.8783,
+      "R2": -0.0666,
+      "MAPE": 0.6026
+    },
+    "Regressão linear (Ridge)": {
+      "MAE": 1135.8625,
+      "RMSE": 1918.3746,
+      "R2": 0.2225,
+      "MAPE": 0.4147
+    },
+    "KNN Regressor (k=7)": {
+      "MAE": 1222.1362,
+      "RMSE": 2039.4364,
+      "R2": 0.1213,
+      "MAPE": 0.4411
+    },
+    "Árvore de regressão": {
+      "MAE": 1420.1292,
+      "RMSE": 1984.4528,
+      "R2": 0.168,
+      "MAPE": 0.5406
+    },
+    "SVR (RBF)": {
+      "MAE": 1257.2659,
+      "RMSE": 2080.0822,
+      "R2": 0.0859,
+      "MAPE": 0.4256
+    },
+    "Random Forest": {
+      "MAE": 1225.7616,
+      "RMSE": 2005.3798,
+      "R2": 0.1504,
+      "MAPE": 0.4304
+    }
+  },
+  "residuos_por_regiao": {
+    "Centro": {
+      "n": 10,
+      "MAE": 1622.27,
+      "MAPE": 0.35,
+      "vies": 1217.87
+    },
+    "Leste": {
+      "n": 10,
+      "MAE": 1102.33,
+      "MAPE": 0.43,
+      "vies": 147.2
+    },
+    "Norte": {
+      "n": 1,
+      "MAE": 403.14,
+      "MAPE": 0.54,
+      "vies": -403.14
+    },
+    "Não localizada": {
+      "n": 9,
+      "MAE": 1396.15,
+      "MAPE": 0.58,
+      "vies": 349.79
+    },
+    "Oeste": {
+      "n": 2,
+      "MAE": 145.52,
+      "MAPE": 0.11,
+      "vies": -145.52
+    },
+    "Sul": {
+      "n": 2,
+      "MAE": 585.16,
+      "MAPE": 0.45,
+      "vies": -585.16
+    }
+  },
+  "residuos_por_faixa": {
+    "Baixo": {
+      "n": 11,
+      "MAE": 498.16,
+      "MAPE": 0.44,
+      "vies": -498.16
+    },
+    "Médio": {
+      "n": 11,
+      "MAE": 866.3,
+      "MAPE": 0.45,
+      "vies": -351.69
+    },
+    "Alto": {
+      "n": 12,
+      "MAE": 2222.24,
+      "MAPE": 0.4,
+      "vies": 2023.55
+    }
+  },
+  "intervalo_80_log": [
+    -0.5827346950299528,
+    0.819640358543792
+  ],
+  "sigma_log": 0.5544041637211925,
+  "n_anomalias": 6,
+  "anomalias": [
+    {
+      "id_anuncio": "mgf_umuarama_015",
+      "bairro": "Zona II",
+      "regiao": "Centro",
+      "aluguel_mensal": 750.0,
+      "aluguel_estimado": 2834.0,
+      "diferenca_pct": -73.5,
+      "anomalia": "abaixo do esperado"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_034",
+      "bairro": "Jardim Tamoio",
+      "regiao": "Não localizada",
+      "aluguel_mensal": 4000.0,
+      "aluguel_estimado": 927.0,
+      "diferenca_pct": 331.5,
+      "anomalia": "acima do esperado"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_035",
+      "bairro": "Parque Cidade Jardim",
+      "regiao": "Centro",
+      "aluguel_mensal": 5900.0,
+      "aluguel_estimado": 1441.0,
+      "diferenca_pct": 309.4,
+      "anomalia": "acima do esperado"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_062",
+      "bairro": "Jardim Cruzeiro",
+      "regiao": "Leste",
+      "aluguel_mensal": 700.0,
+      "aluguel_estimado": 2413.0,
+      "diferenca_pct": -71.0,
+      "anomalia": "abaixo do esperado"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_067",
+      "bairro": "Zona V",
+      "regiao": "Centro",
+      "aluguel_mensal": 12000.0,
+      "aluguel_estimado": 2816.0,
+      "diferenca_pct": 326.1,
+      "anomalia": "acima do esperado"
+    },
+    {
+      "id_anuncio": "garcia_4992",
+      "bairro": "Zona II",
+      "regiao": "Centro",
+      "aluguel_mensal": 8000.0,
+      "aluguel_estimado": 1396.0,
+      "diferenca_pct": 473.1,
+      "anomalia": "acima do esperado"
+    }
+  ]
+}

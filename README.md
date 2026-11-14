@@ -1,134 +1,94 @@
-# Casas de Aluguel em Umuarama — Pacote Integrado
+# Observatório de Aluguel de Casas — Umuarama/PR
 
-Este pacote junta **o dataset-semente já coletado** com o **pipeline adaptado**
-(scraper + validador + limpador), todos falando o mesmo schema de 21 colunas.
+Projeto integrador de **Aprendizagem de Máquina** (Engenharia de Software). O sistema coleta anúncios públicos de
+**casas para alugar em Umuarama-PR**, limpa e integra os dados, mostra os imóveis num **mapa de calor** com as
+áreas mais baratas e mais caras, agrupa os imóveis em perfis, **classifica em faixas de preço** (Baixo, Médio e
+Alto) e **classifica um imóvel novo**, não catalogado, com estimativa em R$.
 
-## O que mudou em relação à versão anterior
+> Uso acadêmico. Os valores vêm de anúncios, que podem estar desatualizados ou errados. As estimativas não são
+> avaliação imobiliária oficial.
 
-O código original foi feito focado na OLX e com validação rígida — foi o que
-descartou 56 das 57 casas na primeira tentativa. Três coisas foram corrigidas:
+## Escopo
 
-1. **Fontes reais** (`config.py`): agora inclui MGF, Wimoveis, CasaMineira,
-   Portal da Cidade e as imobiliárias locais (Aldemir, Garcia, Babolin, União),
-   além de OLX/Imovelweb como último recurso.
-2. **Validação que preserva casas** (`scraper.py`): a única razão para descartar
-   uma linha passou a ser **não ter preço de aluguel**. Área, quartos, banheiros,
-   vagas e suítes, se faltarem ou saírem de faixas largas, ficam **em branco** e a
-   casa é mantida — não jogada fora.
-3. **Schema de 21 colunas**: acrescentado o campo `suites`, que apareceu na coleta.
+| Dimensão | Escolha |
+|---|---|
+| Cidade | Umuarama (PR) |
+| Tipo de imóvel | Casas (inclui sobrados e casas em condomínio) |
+| Finalidade | Aluguel residencial |
+| Base final | **136 casas**, 67 bairros, coletas em 15/09/2026 e 14/11/2026 |
 
-## Arquivos
-
-```
-pacote_umuarama/
-├── scraper.py          # coletor adaptado (rode na SUA máquina, com internet)
-├── config.py           # fontes reais + faixas largas + schema 21 campos
-├── validar_dataset.py  # relatório de qualidade (não reprova por campo secundário)
-├── limpar_dataset.py   # padroniza tipos, bairros, Sim/Não; mantém vazios
-├── validate_output.py  # checagem rápida de integridade do CSV
-├── requirements.txt
-└── data/
-    ├── raw/
-    │   └── casas_aluguel_umuarama.csv            # 84 casas reais já coletadas (semente)
-    └── processed/
-        ├── casas_aluguel_umuarama_processed.csv  # saída da limpeza (pronta p/ análise)
-        └── ..._resumo.txt                        # estatísticas descritivas
-```
-
-## Como o dataset-semente se encaixa
-
-O CSV em `data/raw/` é a **entrada** do mesmo pipeline que o scraper alimenta.
-Ou seja: as 84 casas já coletadas passam pelo validador e pelo limpador
-exatamente como passariam as casas que o scraper trouxer. Quando você rodar o
-scraper e gerar mais linhas, é só **concatenar** ao CSV de `raw/` e repassar pelo
-pipeline — nada mais muda.
-
-## Fluxo de uso
+## Como rodar
 
 ```bash
-# 1) instalar dependências
+python -m venv .venv            # ou um caminho em outro disco, se o C: estiver cheio
+.venv\Scripts\activate          # Windows  (Linux/Mac: source .venv/bin/activate)
 pip install -r requirements.txt
 
-# 2) (opcional) coletar mais casas na sua máquina — começe pelas locais
-python3 scraper.py --fontes aldemir,garcia,babolin,mgf \
-    --output data/raw/coletadas.csv --log data/logs/coleta_log.txt
-
-#    e junte ao semente:
-#    (cabeçalho é igual; basta anexar as linhas novas)
-
-# 3) validar o que houver em raw/
-python3 validar_dataset.py data/raw/casas_aluguel_umuarama.csv
-
-# 4) limpar e padronizar -> processed/
-python3 limpar_dataset.py \
-    data/raw/casas_aluguel_umuarama.csv \
-    data/processed/casas_aluguel_umuarama_processed.csv
+python run_pipeline.py          # limpeza → validação → EDA → agrupamento → classificação → regressão → mapa (~8 min)
+streamlit run app.py            # protótipo interativo
 ```
 
-## Estado atual dos dados (semente, 84 casas)
+- Mapa sem servidor: abra `reports/mapa_calor_umuarama.html` no navegador.
+- Classificar um imóvel pela linha de comando:
+  `python -m src.prever --bairro "Zona II" --quartos 3 --banheiros 2 --suites 1 --vagas 2 --area 140`
+- Coletar dados novos (internet; respeita robots.txt e crawl-delay; ~5 min): `python run_pipeline.py --coletar`
 
-- 75 casas com preço de aluguel; mediana ≈ R$ 2.500 (faixa R$ 700–12.000)
-- 52 bairros/zonas distintos
-- quartos preenchidos em 100%; suítes em 75%; banheiros em 64%; vagas em 48%
-- **área em m² em apenas 14/84** — é o campo mais fraco. Está nas páginas
-  individuais dos anúncios, que só o scraper alcança. Prioridade ao coletar.
-- fonte predominante: MGF Imóveis (as buscas começaram a repetir anúncios).
+## Estrutura
 
-## Proveniência dos dados (de onde veio cada informação)
+```
+config.py              fontes, caminhos, faixas de sanidade, constantes geográficas e de modelagem
+scraper.py             coleta responsável (adaptadores: Deztop, Portal da Cidade, Imobzi/União, HTML genérico)
+limpar_dataset.py      integração, padronização de bairros, privacidade, duplicatas, flags, geocodificação
+validar_dataset.py     relatório de qualidade (ausentes, outliers por IQR, duplicatas, cobertura por região)
+run_pipeline.py        executa tudo na ordem
+app.py                 protótipo Streamlit (mapa, filtros, indicadores, modelos, classificar imóvel novo)
+src/
+  normalizacao.py      bairros canônicos, remoção de número de porta/telefone, flags de texto
+  geo.py               geocodificação por bairro (OSM via Photon/Overpass, com cache), regiões e grade
+  features.py          atributos, pré-processamento (sem vazamento) e definição das faixas de preço
+  eda.py               análise exploratória → reports/figuras/01–09 e reports/eda_resumo.md
+  agrupamento.py       K-means × hierárquico × DBSCAN, silhueta, estabilidade, perfis
+  classificacao.py     8 modelos (2 baselines) em validação cruzada 5×10, teste, erros, nº de classes
+  regressao.py         estimativa em R$, resíduos por região/faixa, anúncios fora do padrão
+  mapa.py              mapa de calor (folium) e indicadores por região, bairro e célula
+  prever.py            classifica imóvel novo (faixa, R$, perfil, comparáveis, semelhantes)
+data/raw/              dados brutos (semente + coletados)       data/processed/  base limpa e derivados
+data/geo/              cache de geocodificação e endereços OSM  data/logs/       log do scraper
+models/                classificador, regressor e agrupamento (joblib)
+reports/               figuras, métricas (JSON), indicadores (CSV), mapa HTML, validação
+docs/                  dicionário de dados e relatório técnico
+```
 
-**Importante para o relatório:** as 84 casas-semente **não** foram raspadas
-pelo `scraper.py`. Elas foram extraídas manualmente dos **trechos de resultado
-de busca** (snippets) dos portais listados abaixo, em setembro de 2026. Ou seja:
-onde o snippet trazia preço, bairro, quartos etc., o dado foi transcrito
-literalmente; onde não trazia, o campo ficou **em branco** — nada foi inventado.
-Isso explica por que a área em m² aparece em poucas casas: ela quase nunca
-consta no snippet, só na página interna do anúncio (que o scraper alcança).
+## Resultados (resumo — detalhes em [docs/relatorio_tecnico.md](docs/relatorio_tecnico.md))
 
-### Fontes efetivamente usadas na semente
+| Tarefa | Resultado |
+|---|---|
+| Classificação (3 faixas, tercis do treino) | **Random Forest**: balanced accuracy 0,61 ± 0,10 na validação cruzada e 0,64 no teste (acaso = 0,33). Erro grave (Baixo↔Alto) em 6% dos casos |
+| Número de classes | 3 classes: melhor equilíbrio entre detalhe e separabilidade (2 classes = só "barato ou caro"; 4 ou 5 caem para 0,50 e 0,41) |
+| Regressão (R$) | Random Forest em log: MAE ≈ R$ 1.150 na validação cruzada (baseline R$ 1.620), R² 0,26. Fraca: serve como referência, não como avaliação |
+| Agrupamento | K-means k=4 (silhueta 0,33, estabilidade ARI 0,71): Compactos e econômicos, Familiares intermediários, Amplos, Alto padrão |
+| Mapa | Superfície de preço interpolada, grade de 1 km, calor de casas caras e baratas, pontos e bairros, com legenda e aviso de baixa confiabilidade |
 
-| Fonte | Casas | URL de origem |
-|---|---|---|
-| MGF Imóveis | 81 | https://www.mgfimoveis.com.br/aluguel/casa/pr-umuarama (e subpáginas por bairro/zona) |
-| Wimoveis | 2 | https://www.wimoveis.com.br/aluguel/casas/padrao/pr/umuarama |
-| CasaMineira | 1 | https://www.casamineira.com.br/aluguel/casa/umuarama_pr |
+## Fontes de dados e ética
 
-Subpáginas do MGF consultadas (por bairro/zona): pr-umuarama-zona-ii,
-pr-umuarama-zona-iii, pr-umuarama-jardim-panorama, pr-umuarama-jardim-tamoio,
-pr-umuarama-jardim-tropical, pr-umuarama-jardim-soluar, entre outras.
+- **Semente (set/2026)**: 84 anúncios transcritos de trechos de resultados de busca (MGF Imóveis 81, Wimoveis 2,
+  CasaMineira 1). Nada inventado: o que o trecho não trazia ficou em branco.
+- **Coleta automatizada (nov/2026)**, via `scraper.py`, só em páginas que o robots.txt permite:
+  Deztop (ex-MGF), Portal da Cidade (1ª página, porque o robots.txt proíbe URLs com `?`), Imobiliária União,
+  Aldemir, Garcia e Babolin.
+  - Respeita `Crawl-delay` (10 s na Aldemir e na Garcia) e faz no mínimo 2 s entre requisições.
+  - A API da plataforma Imobzi foi deixada de fora: o robots.txt dela proíbe robôs de IA.
+- **Não são guardados** telefone, e-mail, nome de corretor/proprietário nem descrição livre. Endereço só com o
+  nome da rua, sem número.
+- **Coordenadas**: centroide do bairro a partir do OpenStreetMap (© OpenStreetMap contributors, ODbL), via Photon
+  e Overpass, com no máximo 1 requisição/s e cache. 28 casas (21%) estão em bairros que o OSM não conhece e
+  ficam sem ponto no mapa.
+- **Correção registrada**: o log de 21/09/2026 dizia que o robots.txt do MGF bloqueava a coleta. Era falso
+  positivo: o `urllib.robotparser` baixava o robots.txt com o User-Agent `Python-urllib`, recebia 403 e passava a
+  proibir tudo. O scraper agora tem leitor próprio de robots.txt, com suporte a curingas.
 
-### Como cada campo foi obtido
+## Limitações
 
-- `aluguel_mensal`, `bairro`, `quartos`, `banheiros`, `vagas_garagem`,
-  `suites` — transcritos do texto do snippet quando presentes.
-- `area_m2` — só quando o snippet informava m² explicitamente (14 casas).
-- `piscina`, `churrasqueira`, `mobiliado` — marcados "Sim" apenas quando a
-  palavra-chave aparecia no texto; caso contrário, vazio (não "Não").
-- `latitude`, `longitude`, `endereco_generico`, `cozinha`, `condicao_imovel`,
-  `area_externa` — não disponíveis nos snippets; ficaram vazios.
-- `url_anuncio` — aponta para a **página de listagem** da fonte, não para o
-  anúncio individual (o snippet não expõe a URL de cada imóvel).
-
-### Fontes mapeadas mas ainda NÃO coletadas
-
-Estas foram verificadas como tendo casas de Umuarama-PR e já estão configuradas
-em `config.py`, prontas para o scraper na sua máquina — mas não entraram na
-semente porque exigem abrir cada anúncio:
-
-- Imobiliárias locais: Aldemir, Garcia, Babolin, Imobiliária União
-- Agregadores: Portal da Cidade, Imovelweb
-- Portais que bloqueiam automação (último recurso): OLX, ZAP
-
-### Ressalvas de representatividade (declare no relatório)
-
-- Fonte concentrada: ~96% das casas vêm do MGF Imóveis.
-- Dados de busca podem estar desatualizados ou duplicar anúncios entre portais.
-- A amostra não cobre bairros sem anúncios online e sub-representa aluguéis
-  baixos informais (que circulam em grupos de Facebook, não indexados).
-- Nenhum dado pessoal (telefone, nome de proprietário, endereço com número)
-  foi coletado.
-
-## Próximo passo natural
-
-Análise exploratória + primeiro K-Means sobre
-`data/processed/casas_aluguel_umuarama_processed.csv`. O pipeline já entrega o
-arquivo no formato certo para isso.
+Amostra pequena (≈130 casas utilizáveis); área ausente em 62% dos anúncios; concentração de fontes (MGF/Deztop
+= 76%, Portal da Cidade = 20%); coordenadas aproximadas (bairro, não imóvel); anúncios repetidos com preço diferente podem ter
+escapado da deduplicação; aluguéis informais não aparecem; duas datas de coleta separadas por 2 meses.

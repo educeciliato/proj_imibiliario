@@ -1,0 +1,68 @@
+bairro,n,media,mediana,desvio,minimo,maximo,lat,lon,preco_m2_mediano,n_com_area,cv_pct,confiabilidade
+Zona II,14,3363.6,2450.0,2320.2,750.0,8000.0,-23.76177,-53.30077,16.3,5,69.0,ok
+Zona I,7,4035.7,3600.0,2375.0,1500.0,7900.0,-23.76273,-53.31283,23.8,3,59.0,ok
+Zona III,5,3670.0,2800.0,1993.6,1700.0,6500.0,-23.75782,-53.29702,17.8,3,54.0,ok
+Zona V,5,3260.0,1200.0,4893.8,700.0,12000.0,-23.75294,-53.31176,11.6,2,150.0,ok
+Paysage Essenza Condomínio,4,4550.0,4750.0,519.6,3800.0,4900.0,-23.75374,-53.26992,26.3,2,11.0,ok
+Jardim São Cristóvão,4,3112.5,2350.0,2161.2,1500.0,6250.0,-23.7823,-53.28602,,0,69.0,ok
+Jardim Azaléia,4,2725.0,1975.0,1915.1,1450.0,5500.0,,,,0,70.0,ok
+Zona VII,4,1670.0,1490.0,904.6,900.0,2800.0,-23.76484,-53.31386,,0,54.0,ok
+Zona VI,4,1400.0,1375.0,158.1,1250.0,1600.0,-23.7737,-53.32333,16.9,2,11.0,ok
+Jardim Alphaville,4,2325.0,2400.0,386.2,1800.0,2700.0,-23.74973,-53.28733,10.6,2,17.0,ok
+Parque Interlagos II,4,3687.5,3950.0,1887.8,1350.0,5500.0,-23.75504,-53.27487,8.8,1,51.0,ok
+Jardim Yoshi,3,4183.3,3800.0,664.0,3800.0,4950.0,,,,0,16.0,ok
+Parque Cidade Jardim,3,2830.0,1600.0,2676.1,990.0,5900.0,-23.7755,-53.3068,,0,95.0,ok
+Parque Interlagos,3,1733.3,1500.0,971.3,900.0,2800.0,-23.75504,-53.27487,,0,56.0,ok
+Jardim Cruzeiro,3,1733.3,700.0,1789.8,700.0,3800.0,-23.75256,-53.28331,,0,103.0,ok
+Parque Tokio,3,843.3,680.0,309.2,650.0,1200.0,-23.77757,-53.26356,12.1,2,37.0,ok
+Jardim Petrópolis,2,2825.0,2825.0,2793.1,850.0,4800.0,-23.77416,-53.31011,14.2,2,99.0,baixa (poucos dados)
+Jardim Pacífico,2,1950.0,1950.0,777.8,1400.0,2500.0,,,,0,40.0,baixa (poucos dados)
+Parque San Caetano,2,1100.0,1100.0,424.3,800.0,1400.0,,,,0,39.0,baixa (poucos dados)
+Jardim Colibri,2,1125.0,1125.0,247.5,950.0,1300.0,-23.78215,-53.31909,7.9,1,22.0,baixa (poucos dados)
+Jardim dos Príncipes,2,3550.0,3550.0,495.0,3200.0,3900.0,-23.76282,-53.29283,24.9,1,14.0,baixa (poucos dados)
+Jardim Imigrantes II,2,6900.0,6900.0,0.0,6900.0,6900.0,-23.74599,-53.29463,18.2,2,0.0,baixa (poucos dados)
+Parque Dom Bosco,2,3500.0,3500.0,2121.3,2000.0,5000.0,-23.77208,-53.28499,12.2,2,61.0,baixa (poucos dados)
+Jardim Aeroporto,2,3900.0,3900.0,3818.4,1200.0,6600.0,-23.76871,-53.33278,,0,98.0,baixa (poucos dados)
+Gleba Figueira,2,5950.0,5950.0,1484.9,4900.0,7000.0,,,22.0,2,25.0,baixa (poucos dados)
+Parque Estância II,2,1950.0,1950.0,70.7,1900.0,2000.0,-23.76245,-53.32939,,0,4.0,baixa (poucos dados)
+Parque Belo Monte,1,900.0,900.0,,900.0,900.0,-23.78833,-53.33678,14.5,1,,baixa (poucos dados)
+Parque Alto da Paraná,1,900.0,900.0,,900.0,900.0,-23.75244,-53.2747,,0,,baixa (poucos dados)
+Parque Danielle,1,1100.0,1100.0,,1100.0,1100.0,-23.77806,-53.32152,,0,,baixa (poucos dados)
+Munguba,1,6250.0,6250.0,,6250.0,6250.0,,,,0,,baixa (poucos dados)
+Parque Vitória Régia,1,5900.0,5900.0,,5900.0,5900.0,-23.78557,-53.32448,18.8,1,,baixa (poucos dados)
+Parque Monte Líbano,1,4200.0,4200.0,,4200.0,4200.0,-23.7511,-53.27976,,0,,baixa (poucos dados)
+Parque Montreal,1,800.0,800.0,,800.0,800.0,-23.78989,-53.33487,15.4,1,,baixa (poucos dados)
+Parque Viena III,1,1200.0,1200.0,,1200.0,1200.0,,,,0,,baixa (poucos dados)
+Parque das Jaboticabeiras,1,750.0,750.0,,750.0,750.0,-23.73182,-53.31922,,0,,baixa (poucos dados)
+Paysage Unique Condomínio,1,5500.0,5500.0,,5500.0,5500.0,,,,0,,baixa (poucos dados)
+Zona I-A,1,4500.0,4500.0,,4500.0,4500.0,-23.78879,-53.31576,,0,,baixa (poucos dados)
+Zona IV,1,750.0,750.0,,750.0,750.0,-23.75114,-53.30604,9.4,1,,baixa (poucos dados)
+Linha Bonita,1,2500.0,2500.0,,2500.0,2500.0,,,,0,,baixa (poucos dados)
+Alto São Francisco,1,2000.0,2000.0,,2000.0,2000.0,,,6.0,1,,baixa (poucos dados)
+Jardim das Cerejeiras,1,1350.0,1350.0,,1350.0,1350.0,-23.75824,-53.33082,25.0,1,,baixa (poucos dados)
+Jardim Los Angeles,1,1950.0,1950.0,,1950.0,1950.0,,,13.9,1,,baixa (poucos dados)
+Jardim Alto da Boa Vista,1,1300.0,1300.0,,1300.0,1300.0,-23.78518,-53.32289,6.2,1,,baixa (poucos dados)
+Jardim América,1,1200.0,1200.0,,1200.0,1200.0,-23.75672,-53.29045,12.0,1,,baixa (poucos dados)
+Jardim Aratimbó,1,900.0,900.0,,900.0,900.0,,,,0,,baixa (poucos dados)
+Jardim Araucária,1,3000.0,3000.0,,3000.0,3000.0,,,16.7,1,,baixa (poucos dados)
+Jardim Araxá,1,1850.0,1850.0,,1850.0,1850.0,-23.75766,-53.3219,,0,,baixa (poucos dados)
+Jardim Belvedere,1,4500.0,4500.0,,4500.0,4500.0,-23.76956,-53.29714,,0,,baixa (poucos dados)
+Jardim Birigui,1,3000.0,3000.0,,3000.0,3000.0,-23.76956,-53.29714,,0,,baixa (poucos dados)
+Jardim Canadá,1,850.0,850.0,,850.0,850.0,-23.77501,-53.29611,,0,,baixa (poucos dados)
+Jardim Cima,1,1800.0,1800.0,,1800.0,1800.0,-23.75545,-53.32348,,0,,baixa (poucos dados)
+Jardim Garças,1,1300.0,1300.0,,1300.0,1300.0,-23.76699,-53.33042,16.2,1,,baixa (poucos dados)
+Jardim Imperial I,1,1600.0,1600.0,,1600.0,1600.0,-23.7721,-53.28951,,0,,baixa (poucos dados)
+Jardim Metropolitano,1,1300.0,1300.0,,1300.0,1300.0,,,,0,,baixa (poucos dados)
+Jardim Veneza II,1,1600.0,1600.0,,1600.0,1600.0,-23.78773,-53.32611,21.3,1,,baixa (poucos dados)
+Jardim Modelo,1,1600.0,1600.0,,1600.0,1600.0,-23.74919,-53.32427,,0,,baixa (poucos dados)
+Jardim Panorama,1,7900.0,7900.0,,7900.0,7900.0,,,15.8,1,,baixa (poucos dados)
+Jardim Paraíso,1,850.0,850.0,,850.0,850.0,-23.7764,-53.29877,,0,,baixa (poucos dados)
+Jardim Real,1,1500.0,1500.0,,1500.0,1500.0,-23.78389,-53.29338,,0,,baixa (poucos dados)
+Jardim Sakai,1,1800.0,1800.0,,1800.0,1800.0,,,18.0,1,,baixa (poucos dados)
+Jardim San Fernando,1,1600.0,1600.0,,1600.0,1600.0,-23.77853,-53.32634,,0,,baixa (poucos dados)
+Jardim San Martim,1,800.0,800.0,,800.0,800.0,-23.77906,-53.33591,,0,,baixa (poucos dados)
+Jardim Santa Clara,1,1350.0,1350.0,,1350.0,1350.0,,,,0,,baixa (poucos dados)
+Conjunto Ouro Preto,1,1200.0,1200.0,,1200.0,1200.0,,,,0,,baixa (poucos dados)
+Jardim Tamoio,1,4000.0,4000.0,,4000.0,4000.0,,,,0,,baixa (poucos dados)
+Jardim Veneza,1,1400.0,1400.0,,1400.0,1400.0,-23.78773,-53.32668,,0,,baixa (poucos dados)
+Jardim São Cristóvão II,1,1200.0,1200.0,,1200.0,1200.0,-23.78145,-53.28894,20.0,1,,baixa (poucos dados)

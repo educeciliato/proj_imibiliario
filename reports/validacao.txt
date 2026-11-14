@@ -1,0 +1,61 @@
+
+======================================================================
+VALIDAÇÃO DE DATASET — casas_aluguel_umuarama_processed.csv
+======================================================================
+
+📊 RESUMO BÁSICO
+   Linhas: 136 | Colunas: 39
+   Casas com aluguel (utilizáveis como alvo): 136
+   Por fonte: MGF IMÓVEIS (SEMENTE)=66, DEZTOP (EX-MGF IMÓVEIS)=37, PORTAL DA CIDADE=27, WIMOVEIS=1, CASAMINEIRA=1, IMOBILIÁRIA UNIÃO=1, ALDEMIR IMÓVEIS=1, GARCIA IMÓVEIS=1, BABOLIN IMÓVEIS=1
+
+✓ CAMPOS OBRIGATÓRIOS
+   ✓ id_anuncio: 0 ausentes (0.0%)
+   ✓ data_coleta: 0 ausentes (0.0%)
+   ✓ fonte: 0 ausentes (0.0%)
+   ⚠️  bairro: 1 ausentes (0.7%)
+   ✓ aluguel_mensal: 0 ausentes (0.0%)
+   ✓ url_anuncio: 0 ausentes (0.0%)
+
+📊 PREENCHIMENTO DOS CAMPOS SECUNDÁRIOS (ausência é esperada; imputada no modelo)
+   ⚠️  area_m2: 38% preenchido
+   ✓ quartos: 98% preenchido
+   ⚠️  banheiros: 60% preenchido
+   ⚠️  vagas_garagem: 51% preenchido
+   ✓ suites: 73% preenchido
+   ✓ latitude: 79% preenchido
+
+🔧 TIPOS
+   ✓ aluguel_mensal: 0 valores não numéricos
+   ✓ area_m2: 0 valores não numéricos
+   ✓ quartos: 0 valores não numéricos
+   ✓ banheiros: 0 valores não numéricos
+   ✓ vagas_garagem: 0 valores não numéricos
+   ✓ suites: 0 valores não numéricos
+   ✓ latitude: 0 valores não numéricos
+   ✓ longitude: 0 valores não numéricos
+
+⚠️  OUTLIERS (regra do IQR × 1,5 e critérios de domínio)
+   Aluguel > R$ 7,862: 5 casas -> mgf_umuarama_012 (R$ 7,900), mgf_umuarama_054 (R$ 7,900), mgf_umuarama_067 (R$ 12,000), deztop_310355305 (R$ 7,900), garcia_4992 (R$ 8,000)
+   Preço/m² fora de [4, 60]: 3 -> mgf_umuarama_005, deztop_293884078, deztop_250620463
+   (investigar antes de remover: podem ser imóveis especiais ou erros de digitação)
+
+🔍 DUPLICATAS
+   Linhas idênticas: 0 | ids repetidos: 0 | mesmo bairro+aluguel+quartos: 2
+
+📅 DATAS DE COLETA
+   2026-09-15: 68, 2026-11-14: 68
+
+🏘️  COBERTURA POR REGIAO (mínimo recomendado: 5)
+   ✓ Centro: 43
+   ✓ Leste: 38
+   ✓ Não localizada: 28
+   ✓ Sul: 17
+   ✓ Oeste: 7
+   ⚠️  Norte: 3
+
+======================================================================
+PONTOS DE ATENÇÃO:
+   • fonte concentrada: 76% dos registros vêm de MGF/DEZTOP
+   • 2 par(es) com mesmo bairro, aluguel e quartos — possíveis repetidos com ficha conflitante (mantidos; revisar manualmente)
+
+✓ Validação concluída — 2026-11-14 16:56:59

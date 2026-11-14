@@ -1,0 +1,68 @@
+chave,bairro,latitude,longitude,metodo,n_pontos,consulta
+alto sao francisco,Alto São Francisco,,,nao_localizado,0,Alto São Francisco
+conjunto ouro preto,Conjunto Ouro Preto,,,nao_localizado,0,Conjunto Ouro Preto
+gleba figueira,Gleba Figueira,,,nao_localizado,0,Gleba Figueira
+jardim aeroporto,Jardim Aeroporto,-23.7687149,-53.3327793,osm_ruas,1,Rua Ebílio Uliana
+jardim alphaville,Jardim Alphaville,-23.74972785,-53.287329850000006,osm_ruas,2,Rua Arecidio Cassiano; Rua Cisne
+jardim alto da boa vista,Jardim Alto da Boa Vista,-23.7851827,-53.3228928,osm_ruas,1,Rua Padre João Maria Daniel
+jardim america,Jardim América,-23.7567228,-53.2904454,osm_ruas,1,Rua Tietê
+jardim aratimbo,Jardim Aratimbó,,,nao_localizado,0,Jardim Aratimbó
+jardim araucaria,Jardim Araucária,,,nao_localizado,0,Jardim Araucária
+jardim araxa,Jardim Araxá,-23.7576553,-53.3219004,osm_ruas,1,Travessa Ijuí
+jardim azaleia,Jardim Azaléia,,,nao_localizado,0,Jardim Azaléia
+jardim belvedere,Jardim Belvedere,-23.7695635,-53.2971356,osm_ruas,1,Avenida Rio Grande do Sul
+jardim birigui,Jardim Birigui,-23.7695635,-53.2971356,osm_ruas,1,Av. Rio Grande do Sul
+jardim canada,Jardim Canadá,-23.7750141,-53.2961147,osm_ruas,1,Rua Paranaguá
+jardim cima,Jardim Cima,-23.7554493,-53.3234753,osm_ruas,1,Rua Geraldo Olmedo
+jardim colibri,Jardim Colibri,-23.7821532,-53.3190899,osm_ruas,1,Rua Treze de Maio
+jardim cruzeiro,Jardim Cruzeiro,-23.7525619,-53.2833129,osm_ruas,1,Rua Anderson dos Santos Siqueira
+jardim das cerejeiras,Jardim das Cerejeiras,-23.7582411,-53.3308161,osm_ruas,1,Rua Wilson Alves Lopes
+jardim dos principes,Jardim dos Príncipes,-23.7628185,-53.2928274,osm_enderecos,1,addr:suburb=Jardim dos Príncipes
+jardim garcas,Jardim Garças,-23.7669895,-53.3304217,osm_ruas,1,Rua Sereno
+jardim imigrantes ii,Jardim Imigrantes II,-23.7470413,-53.2935978,osm_ruas,1,Rua Luiz Pelegrinelli
+jardim imperial i,Jardim Imperial I,-23.7720998,-53.2895095,osm_ruas,1,Rua Gílio Gaspareto
+jardim los angeles,Jardim Los Angeles,,,nao_localizado,0,Jardim Los Angeles
+jardim metropolitano,Jardim Metropolitano,,,nao_localizado,0,Jardim Metropolitano
+jardim modelo,Jardim Modelo,-23.7491875,-53.3242736,osm_ruas,1,Rua Wellyton Antonio Colognesi de Oliveira
+jardim pacifico,Jardim Pacífico,,,nao_localizado,0,Jardim Pacífico
+jardim panorama,Jardim Panorama,,,nao_localizado,0,Jardim Panorama
+jardim paraiso,Jardim Paraíso,-23.776400549999998,-53.29876745,osm_enderecos,4,addr:suburb=Jardim Paraíso
+jardim petropolis,Jardim Petrópolis,-23.77415585,-53.310113650000005,osm_ruas,2,Rua Lázaro Bom; Rua Rodrigues Alves
+jardim real,Jardim Real,-23.7838942,-53.2933773,osm_ruas,1,Rua Sinval José de Magalhães
+jardim sakai,Jardim Sakai,,,nao_localizado,0,Jardim Sakai
+jardim san fernando,Jardim San Fernando,-23.7785345,-53.3263401,osm_ruas,1,Rua Nossa Senhora do Caminho
+jardim san martim,Jardim San Martim,-23.7790582,-53.3359096,osm_ruas,1,Rua Londres
+jardim santa clara,Jardim Santa Clara,,,nao_localizado,0,Jardim Santa Clara
+jardim sao cristovao,Jardim São Cristóvão,-23.7823007,-53.2860183,osm_ruas,1,Rua São José
+jardim sao cristovao ii,Jardim São Cristóvão II,-23.7814512,-53.2889368,osm_ruas,1,Rua Geraldo Pavan
+jardim tamoio,Jardim Tamoio,,,nao_localizado,0,Jardim Tamoio
+jardim veneza,Jardim Veneza,-23.7877283,-53.3266823,osm_ruas,1,Rua José Lupepsa
+jardim veneza ii,Jardim Veneza II,-23.7877313,-53.3261079,osm_ruas,1,Rua Domingos Cano Lopes
+jardim yoshi,Jardim Yoshi,,,nao_localizado,0,Jardim Yoshi
+linha bonita,Linha Bonita,,,nao_localizado,0,Linha Bonita
+munguba,Munguba,,,nao_localizado,0,Munguba
+parque alto da parana,Parque Alto da Paraná,-23.752444,-53.2747045,osm_enderecos,1,addr:suburb=Parque Alto da Paraná
+parque belo monte,Parque Belo Monte,-23.7883344,-53.3367836,osm_ruas,1,Rua Maria Thereza de Rezende
+parque cidade jardim,Parque Cidade Jardim,-23.7754979,-53.3067983,osm_enderecos,137,addr:suburb=Parque Cidade Jardim
+parque danielle,Parque Danielle,-23.7780562,-53.3215201,osm_ruas,1,Rua Ibiaí
+parque das jaboticabeiras,Parque das Jaboticabeiras,-23.7318237,-53.3192158,osm_ruas,1,Rua dos Liziantos
+parque dom bosco,Parque Dom Bosco,-23.7720768,-53.2849866,osm_ruas,1,Rua Dom Eugênio
+parque estancia ii,Parque Estância II,-23.7624495,-53.3293853,osm_ruas,1,Rua Hélio Birello
+parque interlagos,Parque Interlagos,-23.7550394,-53.2748669,osm_bairro,1,Parque Interlagos
+parque interlagos ii,Parque Interlagos II,-23.7550394,-53.2748669,osm_bairro,1,Parque Interlagos
+parque monte libano,Parque Monte Líbano,-23.7510965,-53.2797565,osm_ruas,1,Av. Valdomiro Frederico
+parque montreal,Parque Montreal,-23.7898929,-53.3348721,osm_ruas,1,Rua Saul Alves da Silva
+parque san caetano,Parque San Caetano,,,nao_localizado,0,Parque San Caetano
+parque tokio,Parque Tokio,-23.7775704,-53.2635577,osm_ruas,1,Rua Edemir Pedro Zulianelli
+parque viena iii,Parque Viena III,,,nao_localizado,0,Parque Viena III
+parque vitoria regia,Parque Vitória Régia,-23.7855663,-53.3244834,osm_ruas,1,Rua Manoel Botelho Cordeiro
+paysage essenza condominio,Paysage Essenza Condomínio,-23.7537365,-53.2699247,osm_ruas,1,Rua Devanir Borges de Freitas
+paysage unique condominio,Paysage Unique Condomínio,,,nao_localizado,0,Paysage Unique Condomínio
+zona i,Zona I,-23.7627295,-53.3128289,osm_enderecos,47,addr:suburb=Zona I
+zona i-a,Zona I-A,-23.7887937,-53.3157579,osm_enderecos,1,addr:suburb=Zona I-A
+zona ii,Zona II,-23.7617721,-53.30076915,osm_enderecos,18,addr:suburb=Zona II
+zona iii,Zona III,-23.757819249999997,-53.297023949999996,osm_enderecos,10,addr:suburb=Zona III
+zona iv,Zona IV,-23.7511418,-53.3060436,osm_enderecos,1,addr:suburb=Zona IV
+zona v,Zona V,-23.7529429,-53.3117574,osm_enderecos,3,addr:suburb=Zona V
+zona vi,Zona VI,-23.7736979,-53.3233304,osm_enderecos,1,addr:suburb=Zona VI
+zona vii,Zona VII,-23.7648417,-53.3138615,osm_enderecos,5,addr:suburb=Zona VII

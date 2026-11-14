@@ -1,0 +1,154 @@
+{
+  "k_escolhido": 4,
+  "criterio": "maior silhueta do K-means entre k>=3 sem grupo com menos de 5% das casas",
+  "tabela_k": [
+    {
+      "k": 2,
+      "silhueta_kmeans": 0.3931,
+      "silhueta_hierarquico": 0.2503,
+      "inercia": 474.6052,
+      "menor_grupo_pct": 0.2556
+    },
+    {
+      "k": 3,
+      "silhueta_kmeans": 0.3021,
+      "silhueta_hierarquico": 0.2624,
+      "inercia": 372.1259,
+      "menor_grupo_pct": 0.0977
+    },
+    {
+      "k": 4,
+      "silhueta_kmeans": 0.3253,
+      "silhueta_hierarquico": 0.2996,
+      "inercia": 307.0743,
+      "menor_grupo_pct": 0.0752
+    },
+    {
+      "k": 5,
+      "silhueta_kmeans": 0.3333,
+      "silhueta_hierarquico": 0.3161,
+      "inercia": 253.2919,
+      "menor_grupo_pct": 0.015
+    },
+    {
+      "k": 6,
+      "silhueta_kmeans": 0.3517,
+      "silhueta_hierarquico": 0.3338,
+      "inercia": 221.6006,
+      "menor_grupo_pct": 0.015
+    },
+    {
+      "k": 7,
+      "silhueta_kmeans": 0.3028,
+      "silhueta_hierarquico": 0.2834,
+      "inercia": 193.3683,
+      "menor_grupo_pct": 0.015
+    }
+  ],
+  "silhueta": 0.32534866644744326,
+  "estabilidade_ari": 0.7067813378034389,
+  "dbscan": {
+    "eps": 1.7004913065658425,
+    "min_samples": 5,
+    "n_grupos": 1,
+    "ruido": 0.07518796992481203,
+    "silhueta": null
+  },
+  "perfis": [
+    {
+      "grupo": 0,
+      "perfil": "Compactos e econômicos",
+      "n": 64,
+      "aluguel_mediano": 1225.0,
+      "quartos": 3.0,
+      "suites": 1.0,
+      "banheiros": 1.0,
+      "vagas": 1.0,
+      "area_mediana": 80.0,
+      "dist_centro_km": 2.255,
+      "pct_alto_padrao": 0.0,
+      "pct_piscina": 0.0,
+      "pct_condominio": 0.047
+    },
+    {
+      "grupo": 1,
+      "perfil": "Familiares intermediários",
+      "n": 46,
+      "aluguel_mediano": 3400.0,
+      "quartos": 3.0,
+      "suites": 1.0,
+      "banheiros": 2.0,
+      "vagas": 2.0,
+      "area_mediana": 210.0,
+      "dist_centro_km": 1.63,
+      "pct_alto_padrao": 0.065,
+      "pct_piscina": 0.065,
+      "pct_condominio": 0.065
+    },
+    {
+      "grupo": 2,
+      "perfil": "Amplos (muitos banheiros/vagas)",
+      "n": 10,
+      "aluguel_mediano": 4500.0,
+      "quartos": 3.0,
+      "suites": 2.5,
+      "banheiros": 4.0,
+      "vagas": 4.0,
+      "area_mediana": 265.5,
+      "dist_centro_km": 2.67,
+      "pct_alto_padrao": 0.2,
+      "pct_piscina": 0.6,
+      "pct_condominio": 0.0
+    },
+    {
+      "grupo": 3,
+      "perfil": "Alto padrão",
+      "n": 13,
+      "aluguel_mediano": 4950.0,
+      "quartos": 3.0,
+      "suites": 3.0,
+      "banheiros": 1.0,
+      "vagas": 2.0,
+      "area_mediana": 296.0,
+      "dist_centro_km": 1.56,
+      "pct_alto_padrao": 0.231,
+      "pct_piscina": 0.231,
+      "pct_condominio": 0.615
+    }
+  ],
+  "ari_perfil_vs_regiao": -0.027793420620395137,
+  "perfil_x_regiao": {
+    "Alto padrão": {
+      "Centro": 6,
+      "Leste": 5,
+      "Norte": 0,
+      "Não localizada": 2,
+      "Oeste": 0,
+      "Sul": 0
+    },
+    "Amplos (muitos banheiros/vagas)": {
+      "Centro": 4,
+      "Leste": 4,
+      "Norte": 1,
+      "Não localizada": 0,
+      "Oeste": 0,
+      "Sul": 1
+    },
+    "Compactos e econômicos": {
+      "Centro": 16,
+      "Leste": 18,
+      "Norte": 2,
+      "Não localizada": 10,
+      "Oeste": 4,
+      "Sul": 14
+    },
+    "Familiares intermediários": {
+      "Centro": 15,
+      "Leste": 11,
+      "Norte": 0,
+      "Não localizada": 16,
+      "Oeste": 2,
+      "Sul": 2
+    }
+  }
+}

@@ -1,4 +1,11 @@
-requests>=2.31.0,<3
-beautifulsoup4>=4.12.0,<5
-pandas>=2.0.0
-openpyxl>=3.1.0
+# Testado com Python 3.10 (Windows). Versões mínimas.
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4        # TargetEncoder exige >= 1.3
+matplotlib>=3.8
+folium>=0.17
+streamlit>=1.40
+streamlit-folium>=0.22
+requests>=2.31,<3
+beautifulsoup4>=4.12,<5
+joblib>=1.3

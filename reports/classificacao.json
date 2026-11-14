@@ -1,0 +1,708 @@
+{
+  "n_total": 133,
+  "n_treino": 99,
+  "n_teste": 34,
+  "seed": 42,
+  "faixas_treino": [
+    "Baixo: até R$ 1.433",
+    "Médio: R$ 1.433 a R$ 3.000",
+    "Alto: a partir de R$ 3.000"
+  ],
+  "limites_treino": [
+    1433.3333333333333,
+    3000.0
+  ],
+  "distribuicao_treino": [
+    33,
+    31,
+    35
+  ],
+  "distribuicao_teste": [
+    11,
+    11,
+    12
+  ],
+  "modelo_selecionado": "Random Forest",
+  "criterio": "maior balanced accuracy média na validação cruzada 5x10",
+  "hiperparametros": {
+    "Baseline: classe majoritária": {
+      "constant": null,
+      "random_state": null,
+      "strategy": "most_frequent"
+    },
+    "Baseline: sorteio estratificado": {
+      "constant": null,
+      "random_state": 42,
+      "strategy": "stratified"
+    },
+    "KNN (k=7, ponderado)": {
+      "algorithm": "auto",
+      "leaf_size": 30,
+      "metric": "minkowski",
+      "metric_params": null,
+      "n_jobs": null,
+      "n_neighbors": 7,
+      "p": 2,
+      "weights": "distance"
+    },
+    "Naive Bayes Gaussiano": {
+      "priors": null,
+      "var_smoothing": 1e-09
+    },
+    "Árvore de decisão": {
+      "ccp_alpha": 0.0,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": 4,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 5,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "monotonic_cst": null,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "SVM (RBF)": {
+      "C": 1.0,
+      "break_ties": false,
+      "cache_size": 200,
+      "class_weight": "balanced",
+      "coef0": 0.0,
+      "decision_function_shape": "ovr",
+      "degree": 3,
+      "gamma": "scale",
+      "kernel": "rbf",
+      "max_iter": -1,
+      "probability": true,
+      "random_state": 42,
+      "shrinking": true,
+      "tol": 0.001,
+      "verbose": false
+    },
+    "Perceptron": {
+      "alpha": 0.0001,
+      "class_weight": "balanced",
+      "early_stopping": false,
+      "eta0": 1.0,
+      "fit_intercept": true,
+      "l1_ratio": 0.15,
+      "max_iter": 2000,
+      "n_iter_no_change": 5,
+      "n_jobs": null,
+      "penalty": null,
+      "random_state": 42,
+      "shuffle": true,
+      "tol": 0.001,
+      "validation_fraction": 0.1,
+      "verbose": 0,
+      "warm_start": false
+    },
+    "Random Forest": {
+      "bootstrap": true,
+      "ccp_alpha": 0.0,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": 6,
+      "max_features": "sqrt",
+      "max_leaf_nodes": null,
+      "max_samples": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 3,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "monotonic_cst": null,
+      "n_estimators": 300,
+      "n_jobs": -1,
+      "oob_score": false,
+      "random_state": 42,
+      "verbose": 0,
+      "warm_start": false
+    }
+  },
+  "cv_media": {
+    "Baseline: classe majoritária": {
+      "acuracia": 0.3456,
+      "balanced_accuracy": 0.3333,
+      "f1_macro": 0.171,
+      "precisao_macro": 0.1152,
+      "recall_macro": 0.3333,
+      "erro_grave": 0.335
+    },
+    "Baseline: sorteio estratificado": {
+      "acuracia": 0.3344,
+      "balanced_accuracy": 0.3304,
+      "f1_macro": 0.318,
+      "precisao_macro": 0.3233,
+      "recall_macro": 0.3304,
+      "erro_grave": 0.229
+    },
+    "KNN (k=7, ponderado)": {
+      "acuracia": 0.5587,
+      "balanced_accuracy": 0.5606,
+      "f1_macro": 0.5496,
+      "precisao_macro": 0.5857,
+      "recall_macro": 0.5606,
+      "erro_grave": 0.1099
+    },
+    "Naive Bayes Gaussiano": {
+      "acuracia": 0.5117,
+      "balanced_accuracy": 0.5047,
+      "f1_macro": 0.4505,
+      "precisao_macro": 0.5096,
+      "recall_macro": 0.5047,
+      "erro_grave": 0.1229
+    },
+    "Árvore de decisão": {
+      "acuracia": 0.4992,
+      "balanced_accuracy": 0.5026,
+      "f1_macro": 0.4809,
+      "precisao_macro": 0.5844,
+      "recall_macro": 0.5026,
+      "erro_grave": 0.086
+    },
+    "SVM (RBF)": {
+      "acuracia": 0.6019,
+      "balanced_accuracy": 0.5999,
+      "f1_macro": 0.5911,
+      "precisao_macro": 0.6198,
+      "recall_macro": 0.5999,
+      "erro_grave": 0.0776
+    },
+    "Perceptron": {
+      "acuracia": 0.5931,
+      "balanced_accuracy": 0.5894,
+      "f1_macro": 0.5798,
+      "precisao_macro": 0.6061,
+      "recall_macro": 0.5894,
+      "erro_grave": 0.0828
+    },
+    "Random Forest": {
+      "acuracia": 0.6128,
+      "balanced_accuracy": 0.6115,
+      "f1_macro": 0.6032,
+      "precisao_macro": 0.6298,
+      "recall_macro": 0.6115,
+      "erro_grave": 0.0606
+    }
+  },
+  "cv_desvio": {
+    "Baseline: classe majoritária": {
+      "acuracia": 0.0284,
+      "balanced_accuracy": 0.0,
+      "f1_macro": 0.0111,
+      "precisao_macro": 0.0095,
+      "recall_macro": 0.0,
+      "erro_grave": 0.0341
+    },
+    "Baseline: sorteio estratificado": {
+      "acuracia": 0.1099,
+      "balanced_accuracy": 0.1121,
+      "f1_macro": 0.1134,
+      "precisao_macro": 0.1228,
+      "recall_macro": 0.1121,
+      "erro_grave": 0.0759
+    },
+    "KNN (k=7, ponderado)": {
+      "acuracia": 0.1065,
+      "balanced_accuracy": 0.1078,
+      "f1_macro": 0.1067,
+      "precisao_macro": 0.1015,
+      "recall_macro": 0.1078,
+      "erro_grave": 0.0672
+    },
+    "Naive Bayes Gaussiano": {
+      "acuracia": 0.0807,
+      "balanced_accuracy": 0.0693,
+      "f1_macro": 0.084,
+      "precisao_macro": 0.1376,
+      "recall_macro": 0.0693,
+      "erro_grave": 0.0782
+    },
+    "Árvore de decisão": {
+      "acuracia": 0.0856,
+      "balanced_accuracy": 0.0862,
+      "f1_macro": 0.0917,
+      "precisao_macro": 0.1184,
+      "recall_macro": 0.0862,
+      "erro_grave": 0.0724
+    },
+    "SVM (RBF)": {
+      "acuracia": 0.1156,
+      "balanced_accuracy": 0.1143,
+      "f1_macro": 0.116,
+      "precisao_macro": 0.1183,
+      "recall_macro": 0.1143,
+      "erro_grave": 0.0601
+    },
+    "Perceptron": {
+      "acuracia": 0.1081,
+      "balanced_accuracy": 0.1081,
+      "f1_macro": 0.1097,
+      "precisao_macro": 0.1205,
+      "recall_macro": 0.1081,
+      "erro_grave": 0.0513
+    },
+    "Random Forest": {
+      "acuracia": 0.0971,
+      "balanced_accuracy": 0.0946,
+      "f1_macro": 0.0988,
+      "precisao_macro": 0.1063,
+      "recall_macro": 0.0946,
+      "erro_grave": 0.0404
+    }
+  },
+  "teste": {
+    "Baseline: classe majoritária": {
+      "acuracia": 0.3529,
+      "balanced_accuracy": 0.3333,
+      "f1_macro": 0.1739,
+      "precisao_macro": 0.1176,
+      "recall_macro": 0.3333,
+      "erro_grave": 0.3235
+    },
+    "Baseline: sorteio estratificado": {
+      "acuracia": 0.2353,
+      "balanced_accuracy": 0.2348,
+      "f1_macro": 0.2351,
+      "precisao_macro": 0.2452,
+      "recall_macro": 0.2348,
+      "erro_grave": 0.3529
+    },
+    "KNN (k=7, ponderado)": {
+      "acuracia": 0.3824,
+      "balanced_accuracy": 0.3838,
+      "f1_macro": 0.3833,
+      "precisao_macro": 0.3974,
+      "recall_macro": 0.3838,
+      "erro_grave": 0.1471
+    },
+    "Naive Bayes Gaussiano": {
+      "acuracia": 0.5294,
+      "balanced_accuracy": 0.5278,
+      "f1_macro": 0.4654,
+      "precisao_macro": 0.5515,
+      "recall_macro": 0.5278,
+      "erro_grave": 0.1471
+    },
+    "Árvore de decisão": {
+      "acuracia": 0.5294,
+      "balanced_accuracy": 0.5227,
+      "f1_macro": 0.5058,
+      "precisao_macro": 0.5431,
+      "recall_macro": 0.5227,
+      "erro_grave": 0.1471
+    },
+    "SVM (RBF)": {
+      "acuracia": 0.5882,
+      "balanced_accuracy": 0.5833,
+      "f1_macro": 0.5794,
+      "precisao_macro": 0.5852,
+      "recall_macro": 0.5833,
+      "erro_grave": 0.1176
+    },
+    "Perceptron": {
+      "acuracia": 0.5294,
+      "balanced_accuracy": 0.5328,
+      "f1_macro": 0.5299,
+      "precisao_macro": 0.5604,
+      "recall_macro": 0.5328,
+      "erro_grave": 0.0882
+    },
+    "Random Forest": {
+      "acuracia": 0.6471,
+      "balanced_accuracy": 0.6439,
+      "f1_macro": 0.6434,
+      "precisao_macro": 0.6444,
+      "recall_macro": 0.6439,
+      "erro_grave": 0.0882
+    }
+  },
+  "matrizes_confusao_teste": {
+    "Baseline: classe majoritária": [
+      [
+        0,
+        0,
+        11
+      ],
+      [
+        0,
+        0,
+        11
+      ],
+      [
+        0,
+        0,
+        12
+      ]
+    ],
+    "Baseline: sorteio estratificado": [
+      [
+        3,
+        2,
+        6
+      ],
+      [
+        3,
+        2,
+        6
+      ],
+      [
+        6,
+        3,
+        3
+      ]
+    ],
+    "KNN (k=7, ponderado)": [
+      [
+        5,
+        5,
+        1
+      ],
+      [
+        4,
+        4,
+        3
+      ],
+      [
+        4,
+        4,
+        4
+      ]
+    ],
+    "Naive Bayes Gaussiano": [
+      [
+        10,
+        1,
+        0
+      ],
+      [
+        7,
+        1,
+        3
+      ],
+      [
+        5,
+        0,
+        7
+      ]
+    ],
+    "Árvore de decisão": [
+      [
+        3,
+        4,
+        4
+      ],
+      [
+        1,
+        6,
+        4
+      ],
+      [
+        1,
+        2,
+        9
+      ]
+    ],
+    "SVM (RBF)": [
+      [
+        6,
+        3,
+        2
+      ],
+      [
+        2,
+        5,
+        4
+      ],
+      [
+        2,
+        1,
+        9
+      ]
+    ],
+    "Perceptron": [
+      [
+        7,
+        4,
+        0
+      ],
+      [
+        3,
+        6,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "Random Forest": [
+      [
+        6,
+        4,
+        1
+      ],
+      [
+        2,
+        7,
+        2
+      ],
+      [
+        2,
+        1,
+        9
+      ]
+    ]
+  },
+  "relatorio_teste_melhor": {
+    "Baixo": {
+      "precision": 0.6,
+      "recall": 0.5454545454545454,
+      "f1-score": 0.5714285714285714,
+      "support": 11.0
+    },
+    "Médio": {
+      "precision": 0.5833333333333334,
+      "recall": 0.6363636363636364,
+      "f1-score": 0.6086956521739131,
+      "support": 11.0
+    },
+    "Alto": {
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1-score": 0.75,
+      "support": 12.0
+    },
+    "accuracy": 0.6470588235294118,
+    "macro avg": {
+      "precision": 0.6444444444444445,
+      "recall": 0.6439393939393939,
+      "f1-score": 0.6433747412008282,
+      "support": 34.0
+    },
+    "weighted avg": {
+      "precision": 0.6475490196078431,
+      "recall": 0.6470588235294118,
+      "f1-score": 0.6465107782243332,
+      "support": 34.0
+    }
+  },
+  "importancia_permutacao": {
+    "Bairro": 0.133,
+    "Suítes": 0.0928,
+    "Área (m²)": 0.0517,
+    "Latitude": 0.0423,
+    "Banheiros": 0.0352,
+    "Longitude": 0.0264,
+    "Região": 0.0176,
+    "Quartos": 0.0125,
+    "Churrasqueira/gourmet": 0.0076,
+    "Alto padrão": 0.004,
+    "Condomínio": 0.001,
+    "Sobrado": 0.0,
+    "Uso comercial/misto": 0.0,
+    "Piscina": 0.0,
+    "Mobiliado": 0.0,
+    "Distância ao centro (km)": -0.003,
+    "Vagas": -0.0053
+  },
+  "experimento_n_classes": [
+    {
+      "n_classes": 2,
+      "acaso": 0.5,
+      "balanced_accuracy": 0.7723,
+      "desvio": 0.0845,
+      "baseline": 0.5113,
+      "ganho_sobre_acaso": 0.2723,
+      "casas_por_classe_treino": 49.5
+    },
+    {
+      "n_classes": 3,
+      "acaso": 0.3333,
+      "balanced_accuracy": 0.6115,
+      "desvio": 0.0946,
+      "baseline": 0.3304,
+      "ganho_sobre_acaso": 0.2781,
+      "casas_por_classe_treino": 33.0
+    },
+    {
+      "n_classes": 4,
+      "acaso": 0.25,
+      "balanced_accuracy": 0.5006,
+      "desvio": 0.1173,
+      "baseline": 0.2561,
+      "ganho_sobre_acaso": 0.2506,
+      "casas_por_classe_treino": 24.75
+    },
+    {
+      "n_classes": 5,
+      "acaso": 0.2,
+      "balanced_accuracy": 0.4056,
+      "desvio": 0.1139,
+      "baseline": 0.1906,
+      "ganho_sobre_acaso": 0.2056,
+      "casas_por_classe_treino": 19.8
+    }
+  ],
+  "erros_teste": [
+    {
+      "id_anuncio": "deztop_291741651",
+      "bairro": "Jardim Belvedere",
+      "regiao": "Leste",
+      "aluguel_mensal": 4500.0,
+      "quartos": 3.0,
+      "area_m2": null,
+      "real": "Alto",
+      "previsto": "Baixo",
+      "distancia": 2,
+      "flag_alto_padrao": 0,
+      "fonte": "DEZTOP (EX-MGF IMÓVEIS)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_034",
+      "bairro": "Jardim Tamoio",
+      "regiao": "Não localizada",
+      "aluguel_mensal": 4000.0,
+      "quartos": 2.0,
+      "area_m2": null,
+      "real": "Alto",
+      "previsto": "Baixo",
+      "distancia": 2,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "deztop_303558858",
+      "bairro": "Jardim Alto da Boa Vista",
+      "regiao": "Sul",
+      "aluguel_mensal": 1300.0,
+      "quartos": 3.0,
+      "area_m2": 210.0,
+      "real": "Baixo",
+      "previsto": "Alto",
+      "distancia": 2,
+      "flag_alto_padrao": 0,
+      "fonte": "DEZTOP (EX-MGF IMÓVEIS)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_008",
+      "bairro": "Zona II",
+      "regiao": "Centro",
+      "aluguel_mensal": 5000.0,
+      "quartos": 3.0,
+      "area_m2": null,
+      "real": "Alto",
+      "previsto": "Médio",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_007",
+      "bairro": "Linha Bonita",
+      "regiao": "Não localizada",
+      "aluguel_mensal": 2500.0,
+      "quartos": 3.0,
+      "area_m2": null,
+      "real": "Médio",
+      "previsto": "Baixo",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_013",
+      "bairro": "Zona II",
+      "regiao": "Centro",
+      "aluguel_mensal": 2300.0,
+      "quartos": 1.0,
+      "area_m2": null,
+      "real": "Médio",
+      "previsto": "Baixo",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_016",
+      "bairro": "Parque Dom Bosco",
+      "regiao": "Leste",
+      "aluguel_mensal": 2000.0,
+      "quartos": 3.0,
+      "area_m2": 286.0,
+      "real": "Médio",
+      "previsto": "Alto",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_025",
+      "bairro": "Zona I",
+      "regiao": "Centro",
+      "aluguel_mensal": 1500.0,
+      "quartos": 3.0,
+      "area_m2": null,
+      "real": "Médio",
+      "previsto": "Alto",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_071",
+      "bairro": "Jardim Pacífico",
+      "regiao": "Não localizada",
+      "aluguel_mensal": 1400.0,
+      "quartos": 4.0,
+      "area_m2": null,
+      "real": "Baixo",
+      "previsto": "Médio",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    },
+    {
+      "id_anuncio": "portal_81420",
+      "bairro": "Zona VI",
+      "regiao": "Sul",
+      "aluguel_mensal": 1300.0,
+      "quartos": 1.0,
+      "area_m2": 195.0,
+      "real": "Baixo",
+      "previsto": "Médio",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "PORTAL DA CIDADE"
+    },
+    {
+      "id_anuncio": "deztop_309636604",
+      "bairro": "Jardim Garças",
+      "regiao": "Oeste",
+      "aluguel_mensal": 1300.0,
+      "quartos": 3.0,
+      "area_m2": 80.0,
+      "real": "Baixo",
+      "previsto": "Médio",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "DEZTOP (EX-MGF IMÓVEIS)"
+    },
+    {
+      "id_anuncio": "mgf_umuarama_052",
+      "bairro": "Parque Interlagos",
+      "regiao": "Leste",
+      "aluguel_mensal": 900.0,
+      "quartos": 3.0,
+      "area_m2": null,
+      "real": "Baixo",
+      "previsto": "Médio",
+      "distancia": 1,
+      "flag_alto_padrao": 0,
+      "fonte": "MGF IMÓVEIS (SEMENTE)"
+    }
+  ]
+}
