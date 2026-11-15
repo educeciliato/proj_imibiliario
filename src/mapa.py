@@ -120,7 +120,17 @@ def construir_mapa(df: pd.DataFrame, referencia: pd.DataFrame | None = None, cam
 
     m = folium.Map(location=[config.LATITUDE_UMUARAMA, config.LONGITUDE_UMUARAMA], zoom_start=13,
                    tiles=None, control_scale=True)
-    folium.TileLayer("OpenStreetMap", name="Mapa-base: OpenStreetMap", control=False).add_to(m)
+    # Fundo padrão da Esri: funciona ao abrir o HTML direto do disco (file://).
+    # Os servidores do OpenStreetMap bloqueiam páginas sem origem web ("Access
+    # blocked"), por isso o OSM fica só como alternativa no seletor de camadas.
+    esri = "https://server.arcgisonline.com/ArcGIS/rest/services/{}/MapServer/tile/{{z}}/{{y}}/{{x}}"
+    for nome, servico, attr in [
+        ("Mapa-base: ruas (Esri)", "World_Street_Map",
+         "Tiles © Esri — Esri, HERE, Garmin, USGS, NGA, © OpenStreetMap contributors"),
+        ("Mapa-base: cinza claro (Esri)", "Canvas/World_Light_Gray_Base", "Tiles © Esri — Esri, HERE, Garmin, © OpenStreetMap contributors"),
+    ]:
+        folium.TileLayer(esri.format(servico), name=nome, attr=attr, max_zoom=19, show=(servico == "World_Street_Map")).add_to(m)
+    folium.TileLayer("OpenStreetMap", name="Mapa-base: OpenStreetMap (só via servidor web)", show=False).add_to(m)
 
     # 1. superfície interpolada
     sup = folium.FeatureGroup(name="① Superfície de preço (mapa de calor interpolado)", show="superficie" in on)
